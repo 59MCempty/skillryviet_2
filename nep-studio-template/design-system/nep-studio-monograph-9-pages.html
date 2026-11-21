@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nếp Studio · Architectural Monograph (9 Bố cục)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-paper: #F3F0E8;
+      --bg-limestone: #EAE6DC;
+      --ink-charcoal: #1A1B18;
+      --ink-muted: #5C5E58;
+      --accent-moss: #3E4A36;
+      --accent-moss-hover: #2F3929;
+      --rule-hairline: #D6D1C6;
+      --font-display: 'Newsreader', Georgia, serif;
+      --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #E5E0D5;
+      color: var(--ink-charcoal);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .tabular { font-variant-numeric: tabular-nums; }
+    .serif { font-family: var(--font-display); }
+
+    a, button, summary {
+      cursor: pointer;
+      color: inherit;
+      font-family: inherit;
+    }
+
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible {
+      outline: 2px solid var(--accent-moss);
+      outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+
+    /* Top Studio Switcher Bar */
+    .studio-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #1A1B18;
+      color: #F3F0E8;
+      border-bottom: 1px solid #333530;
+      padding: 8px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .studio-bar.is-collapsed .studio-controls { display: none; }
+    .studio-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .bar-btn {
+      background: transparent;
+      color: #D6D1C6;
+      border: 1px solid #454740;
+      padding: 5px 10px;
+      font-size: 12px;
+      min-height: 30px;
+      transition: background-color 180ms ease, color 180ms ease;
+    }
+    .bar-btn:hover { background: #2B2D28; color: #F3F0E8; }
+    .bar-btn.active { background: var(--accent-moss); color: #F3F0E8; border-color: var(--accent-moss); }
+
+    /* Stage */
+    .stage {
+      padding: 24px 20px 64px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    @media (min-width: 1100px) and (max-width: 1439px) {
+      .stage.mode-both { flex-wrap: nowrap; }
+      .stage.mode-both .frame-desktop { zoom: 0.74; }
+    }
+    @media (min-width: 1440px) and (max-width: 1760px) {
+      .stage.mode-both { flex-wrap: nowrap; }
+      .stage.mode-both .frame-desktop { zoom: 0.90; }
+    }
+
+    .viewport-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .viewport-label {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    .frame-desktop {
+      width: 1280px;
+      max-width: 100%;
+      background: var(--bg-paper);
+      border: 1px solid var(--rule-hairline);
+      overflow-x: hidden;
+    }
+
+    .frame-mobile {
+      width: 390px;
+      max-width: 100%;
+      background: var(--bg-paper);
+      border: 1px solid var(--rule-hairline);
+      overflow-x: hidden;
+    }
+
+    .is-hidden { display: none !important; }
+
+    /* Site Shell */
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: var(--accent-moss);
+      color: #F3F0E8;
+      padding: 10px 16px;
+      z-index: 50;
+    }
+    .skip-link:focus { left: 16px; top: 16px; }
+
+    .site-header {
+      border-bottom: 1px solid var(--rule-hairline);
+      background: var(--bg-paper);
+    }
+
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      position: relative;
+    }
+
+    .mobile-mode .header-inner {
+      padding: 14px 20px;
+    }
+
+    .brand-link {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .desktop-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 15px;
+    }
+
+    .nav-item, .nav-dropdown-btn {
+      background: transparent;
+      border: none;
+      padding: 8px 0;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--ink-charcoal);
+      font-size: 15px;
+      border-bottom: 1px solid transparent;
+      transition: border-color 180ms ease, color 180ms ease;
+    }
+
+    .nav-item:hover, .nav-dropdown-btn:hover { color: var(--accent-moss); }
+    .nav-item.active, .nav-dropdown-btn.active { border-bottom-color: var(--ink-charcoal); }
+
+    .dropdown-wrap { position: relative; }
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 220px;
+      background: var(--bg-paper);
+      border: 1px solid var(--rule-hairline);
+      z-index: 40;
+      display: none;
+      flex-direction: column;
+    }
+    .dropdown-menu.open { display: flex; }
+    .dropdown-link {
+      padding: 12px 16px;
+      min-height: 44px;
+      text-decoration: none;
+      font-size: 14px;
+      border-bottom: 1px solid var(--rule-hairline);
+      background: var(--bg-paper);
+      text-align: left;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+    }
+    .dropdown-link:last-child { border-bottom: none; }
+    .dropdown-link:hover, .dropdown-link.active { background: var(--bg-limestone); }
+
+    /* Mobile Menu Button & Drawer */
+    .mobile-menu-btn {
+      background: transparent;
+      border: 1px solid var(--rule-hairline);
+      padding: 8px 16px;
+      min-height: 44px;
+      min-width: 72px;
+      font-size: 15px;
+    }
+    .mobile-drawer {
+      display: none;
+      flex-direction: column;
+      border-top: 1px solid var(--rule-hairline);
+      background: var(--bg-paper);
+      padding: 8px 20px 16px;
+    }
+    .mobile-drawer.open { display: flex; }
+    .mobile-nav-link, .mobile-sub-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 0;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--rule-hairline);
+      text-decoration: none;
+      font-size: 15px;
+      text-align: left;
+    }
+    .mobile-sub-list {
+      display: none;
+      flex-direction: column;
+      padding-left: 16px;
+      background: var(--bg-limestone);
+    }
+    .mobile-sub-list.open { display: flex; }
+    .mobile-sub-link {
+      display: flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 8px 12px;
+      text-decoration: none;
+      font-size: 14px;
+      border-bottom: 1px solid var(--rule-hairline);
+    }
+
+    /* Main Containers */
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 56px 32px;
+    }
+    .mobile-mode .container {
+      padding: 32px 20px;
+    }
+
+    .section-rule {
+      border-top: 1px solid var(--rule-hairline);
+      padding-top: 48px;
+      margin-top: 48px;
+    }
+    .mobile-mode .section-rule {
+      padding-top: 32px;
+      margin-top: 32px;
+    }
+
+    /* Typography */
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      line-height: 1.2;
+      margin: 0 0 16px;
+      letter-spacing: -0.015em;
+    }
+    h1 { font-size: 44px; }
+    .mobile-mode h1 { font-size: 32px; }
+    h2 { font-size: 30px; }
+    .mobile-mode h2 { font-size: 24px; }
+    h3 { font-size: 22px; }
+    p { margin: 0 0 16px; color: var(--ink-charcoal); }
+    .muted { color: var(--ink-muted); }
+    .eyebrow {
+      font-size: 13px;
+      color: var(--ink-muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    /* Buttons & Links */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-moss);
+      color: #F3F0E8;
+      border: 1px solid var(--accent-moss);
+      padding: 12px 24px;
+      min-height: 48px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background-color 180ms ease;
+    }
+    .btn-primary:hover { background: var(--accent-moss-hover); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      color: var(--ink-charcoal);
+      border: 1px solid var(--ink-charcoal);
+      padding: 12px 24px;
+      min-height: 48px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background-color 180ms ease;
+    }
+    .btn-outline:hover { background: var(--bg-limestone); }
+
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      color: var(--ink-charcoal);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+      font-size: 15px;
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+    .text-link:hover { color: var(--accent-moss); }
+
+    .actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    /* Images */
+    .photo {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    /* Grids */
+    .grid-hero {
+      display: grid;
+      grid-template-columns: 35% 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .mobile-mode .grid-hero {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .mobile-mode .grid-hero .hero-media { order: -1; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .mobile-mode .grid-2 {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+    }
+    .mobile-mode .grid-3 {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    /* Spec Bar (02) */
+    .spec-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--rule-hairline);
+      border-bottom: 1px solid var(--rule-hairline);
+      margin: 24px 0 36px;
+    }
+    .mobile-mode .spec-bar {
+      grid-template-columns: 1fr 1fr;
+    }
+    .spec-cell {
+      padding: 16px 16px 16px 0;
+      border-right: 1px solid var(--rule-hairline);
+    }
+    .spec-cell:last-child { border-right: none; }
+    .mobile-mode .spec-cell:nth-child(2n) { border-right: none; padding-left: 16px; }
+    .mobile-mode .spec-cell:nth-child(1),
+    .mobile-mode .spec-cell:nth-child(2) { border-bottom: 1px solid var(--rule-hairline); }
+    .spec-cell:not(:first-child) { padding-left: 16px; }
+    .mobile-mode .spec-cell:nth-child(3) { padding-left: 0; }
+    .spec-label { font-size: 13px; color: var(--ink-muted); margin-bottom: 4px; }
+    .spec-val { font-size: 16px; font-weight: 500; }
+
+    /* Fee Schedule (03) */
+    .fee-row {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 48px;
+      padding: 36px 0;
+      border-top: 1px solid var(--rule-hairline);
+      align-items: start;
+      transition: border-color 0.25s ease, background-color 0.25s ease;
+    }
+    .fee-row:last-of-type { border-bottom: 1px solid var(--rule-hairline); }
+    .fee-row.is-highlighted {
+      border: 1px solid var(--accent-moss);
+      border-left: 3px solid var(--accent-moss);
+      padding: 36px 24px;
+      background: rgba(62, 74, 54, 0.04);
+    }
+    .mobile-mode .fee-row {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 28px 0;
+    }
+    .mobile-mode .fee-row.is-highlighted {
+      padding: 24px 16px;
+    }
+    .fee-num { font-size: 13px; color: var(--ink-muted); margin-bottom: 6px; display: block; }
+    .fee-price { font-size: 24px; font-family: var(--font-display); margin-bottom: 8px; }
+    .fee-meta { font-size: 14px; color: var(--ink-muted); margin-bottom: 12px; }
+    .fee-example {
+      border-left: 2px solid var(--rule-hairline);
+      padding-left: 12px;
+      font-size: 14px;
+      color: var(--ink-muted);
+      margin: 12px 0 20px;
+    }
+
+    /* Booking Form (04) */
+    .booking-grid {
+      display: grid;
+      grid-template-columns: 4fr 8fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .mobile-mode .booking-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .summary-box {
+      background: var(--bg-limestone);
+      padding: 28px;
+    }
+    .mobile-summary-line {
+      border-top: 1px solid var(--rule-hairline);
+      border-bottom: 1px solid var(--rule-hairline);
+      padding: 12px 0;
+      margin-bottom: 24px;
+    }
+    .mobile-summary-trigger {
+      width: 100%;
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 44px;
+      font-size: 14px;
+      padding: 0;
+      text-align: left;
+    }
+    .mobile-summary-detail {
+      display: none;
+      padding-top: 12px;
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+    .mobile-summary-detail.open { display: block; }
+
+    .field { margin-bottom: 24px; }
+    .field label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--rule-hairline);
+      padding: 10px 0;
+      min-height: 44px;
+      font-family: var(--font-sans);
+      font-size: 16px;
+      color: var(--ink-charcoal);
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none;
+      border-bottom-color: var(--accent-moss);
+    }
+    .radio-row {
+      display: flex;
+      gap: 24px;
+      padding: 8px 0;
+    }
+    .radio-opt {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .radio-opt input, input[type="radio"] {
+      width: auto;
+      min-height: auto;
+      border: none;
+      accent-color: var(--accent-moss);
+    }
+
+    .error-msg {
+      color: #8A2C2C;
+      font-size: 13px;
+      margin-top: 6px;
+      display: none;
+    }
+    .error-msg.show { display: block; }
+
+    .confirm-box {
+      background: var(--bg-limestone);
+      border-left: 2px solid var(--accent-moss);
+      padding: 28px;
+    }
+
+    /* FAQ Accordion */
+    details.faq-item {
+      border-top: 1px solid var(--rule-hairline);
+      padding: 16px 0;
+    }
+    details.faq-item:last-of-type { border-bottom: 1px solid var(--rule-hairline); }
+    details.faq-item summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 44px;
+      font-weight: 500;
+      font-size: 16px;
+    }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+    details.faq-item summary::after {
+      content: '+';
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--ink-muted);
+      flex-shrink: 0;
+    }
+    details.faq-item[open] summary::after {
+      content: '−';
+      color: var(--ink-charcoal);
+    }
+    details.faq-item p {
+      margin-top: 10px;
+      color: var(--ink-muted);
+      font-size: 15px;
+    }
+
+    /* Contact 09 Mobile order */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .mobile-mode .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    /* CTA Limestone Band */
+    .cta-band {
+      background: var(--bg-limestone);
+      padding: 36px;
+      margin-top: 48px;
+    }
+    .mobile-mode .cta-band {
+      padding: 24px 20px;
+      margin-top: 32px;
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--rule-hairline);
+      background: var(--bg-paper);
+    }
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 32px;
+    }
+    .mobile-mode .footer-inner { padding: 28px 20px; }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+    .mobile-mode .footer-top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+    .footer-group {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .mobile-mode .footer-group {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      width: 100%;
+    }
+    .footer-link {
+      text-decoration: none;
+      font-size: 14px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .footer-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .footer-note {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .prose { max-width: 66ch; }
+    .prose p { font-size: 17px; line-height: 1.75; }
+    .mobile-mode .prose p { font-size: 16px; }
+  </style>
+</head>
+<body>
+
+  <div class="studio-bar" id="studioBar">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <strong>Nếp Studio · Architectural Monograph</strong>
+      <button type="button" class="bar-btn" data-action="toggle-bar">Thu gọn thanh</button>
+    </div>
+    <div class="studio-controls">
+      <button type="button" class="bar-btn" data-set-page="01">01 Trang chủ</button>
+      <button type="button" class="bar-btn" data-set-page="02">02 Chi tiết dự án</button>
+      <button type="button" class="bar-btn" data-set-page="03">03 Dịch vụ &amp; Giá</button>
+      <button type="button" class="bar-btn" data-set-page="04">04 Đặt lịch</button>
+      <button type="button" class="bar-btn" data-set-page="05">05 Giới thiệu</button>
+      <button type="button" class="bar-btn" data-set-page="06">06 Bộ sưu tập</button>
+      <button type="button" class="bar-btn" data-set-page="07">07 Blog &amp; FAQ</button>
+      <button type="button" class="bar-btn" data-set-page="08">08 Chi tiết bài</button>
+      <button type="button" class="bar-btn" data-set-page="09">09 Liên hệ</button>
+      <span style="opacity:0.4;padding:0 4px;">|</span>
+      <button type="button" class="bar-btn active" data-set-mode="both">Song song</button>
+      <button type="button" class="bar-btn" data-set-mode="desktop">Máy tính 1280</button>
+      <button type="button" class="bar-btn" data-set-mode="mobile">Điện thoại 390</button>
+    </div>
+  </div>
+
+  <main class="stage mode-both" id="stageMain">
+    <div class="viewport-wrap" data-viewport="desktop">
+      <span class="viewport-label">Máy tính · 1280px</span>
+      <div class="frame-desktop" data-frame="desktop"></div>
+    </div>
+    <div class="viewport-wrap" data-viewport="mobile">
+      <span class="viewport-label">Điện thoại · 390px</span>
+      <div class="frame-mobile mobile-mode" data-frame="mobile"></div>
+    </div>
+  </main>
+
+  <script>
+    const PRICING_CONFIG = {
+      G01: { unitPrice: 1500000, minPrice: 1500000 },
+      G02: { unitPrice: 250000, minPrice: 9000000 },
+      G03: { unitPrice: 1200000, minPrice: 1200000, bundleSessions: 2 }
+    };
+
+    const SAMPLE_AREAS = {
+      hienNang: 62,
+      smallApt: 32
+    };
+
+    function formatVnd(amount) {
+      return `${Number(amount).toLocaleString('vi-VN')} đ`;
+    }
+
+    function calcG02Fee(area) {
+      return Math.max(area * PRICING_CONFIG.G02.unitPrice, PRICING_CONFIG.G02.minPrice);
+    }
+
+    const G02_MIN_THRESHOLD_AREA = Math.ceil(PRICING_CONFIG.G02.minPrice / PRICING_CONFIG.G02.unitPrice);
+    const G03_BUNDLE_PRICE = PRICING_CONFIG.G03.unitPrice * PRICING_CONFIG.G03.bundleSessions;
+
+    const PACKAGES = {
+      G01: {
+        code: 'G01',
+        name: 'Tư vấn bố trí mặt bằng',
+        price: `${formatVnd(PRICING_CONFIG.G01.unitPrice)}/căn`,
+        scope: 'Một buổi trực tuyến 60 phút cho căn hộ đến 70 m². Khách gửi mặt bằng có kích thước và ảnh hiện trạng. Sau buổi, nhận 1 sơ đồ bố trí có chú thích và 1 lượt góp ý chỉnh sơ đồ.',
+        extra: 'Đo tại nhà, thêm phương án hoặc căn lớn hơn 70 m² được báo riêng để khách đồng ý trước. Phối cảnh và bản vẽ đóng đồ thuộc gói G02.'
+      },
+      G02: {
+        code: 'G02',
+        name: 'Thiết kế nội thất',
+        price: `${formatVnd(PRICING_CONFIG.G02.unitPrice)}/m² (tối thiểu ${formatVnd(PRICING_CONFIG.G02.minPrice)}/căn)`,
+        scope: 'Mặt bằng bố trí, phối cảnh các phòng trong phạm vi, bảng vật liệu và bản vẽ triển khai đồ nội thất đã thống nhất. Gồm 2 vòng chỉnh sửa tổng hợp.',
+        extra: 'Đổi phạm vi sau duyệt, thêm vòng sửa hoặc khảo sát ngoài phạm vi được báo riêng. Khách duyệt phí trước khi làm.'
+      },
+      G03: {
+        code: 'G03',
+        name: 'Đồng hành thi công',
+        price: `${formatVnd(PRICING_CONFIG.G03.unitPrice)}/buổi (gói ${PRICING_CONFIG.G03.bundleSessions} buổi: ${formatVnd(G03_BUNDLE_PRICE)})`,
+        scope: 'Một lần đến công trình (tối đa 2 giờ) trong khu vực studio công bố để đối chiếu 1 hạng mục với hồ sơ thiết kế. Sau buổi nhận ghi chú, ảnh và điểm cần trao đổi với nhà thầu.',
+        extra: 'Thêm buổi tính theo đơn giá; đi xa hoặc kéo dài buổi được báo riêng trước khi đặt. Nhà thầu phụ trách thi công và bảo hành.'
+      }
+    };
+
+    const state = {
+      page: '01',
+      mode: 'both',
+      selectedPkg: '',
+      highlightPkg: '',
+      bookingSubmitted: false,
+      bookingName: '',
+      bookingMethod: 'Điện thoại',
+      bookingContact: '',
+      bookingArea: '',
+      bookingNote: '',
+      bookingTime: ''
+    };
+
+    // SVG Architectural Drawings (stroke-width: 1, direct on #F3F0E8, no box)
+    const SVG_FLOORPLAN_2D = `
+      <svg viewBox="0 0 420 220" width="100%" height="auto" role="img" aria-label="Bản vẽ mặt bằng 2D Trước và Sau khi xoay bàn ăn về phía băng ghế cửa sổ" style="display:block;max-width:420px;">
+        <rect x="20" y="20" width="380" height="170" fill="none" stroke="#1A1B18" stroke-width="1"/>
+        <line x1="20" y1="70" x2="20" y2="140" stroke="#3E4A36" stroke-width="3"/>
+        <text x="20" y="13" font-family="Be Vietnam Pro, sans-serif" font-size="10" fill="#3E4A36">Cửa sổ nắng</text>
+        <!-- Băng ghế dài sát cửa sổ -->
+        <rect x="24" y="42" width="22" height="124" fill="#EAE6DC" stroke="#1A1B18" stroke-width="1"/>
+        <!-- Bàn ăn vị trí cũ (nét đứt) -->
+        <rect x="130" y="65" width="70" height="44" fill="none" stroke="#5C5E58" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="132" y="57" font-family="Be Vietnam Pro, sans-serif" font-size="10" fill="#5C5E58">Trước</text>
+        <!-- Mũi tên dịch chuyển mảnh -->
+        <line x1="122" y1="88" x2="88" y2="88" stroke="#3E4A36" stroke-width="1"/>
+        <polyline points="94,84 88,88 94,92" fill="none" stroke="#3E4A36" stroke-width="1"/>
+        <!-- Bàn ăn vị trí mới -->
+        <rect x="50" y="65" width="44" height="78" fill="none" stroke="#1A1B18" stroke-width="1"/>
+        <rect x="102" y="75" width="10" height="22" fill="none" stroke="#1A1B18" stroke-width="1"/>
+        <rect x="102" y="111" width="10" height="22" fill="none" stroke="#1A1B18" stroke-width="1"/>
+        <text x="52" y="57" font-family="Be Vietnam Pro, sans-serif" font-size="10" fill="#1A1B18">Sau (5–6 chỗ)</text>
+        <!-- Khu bếp & vòm -->
+        <rect x="290" y="20" width="110" height="36" fill="none" stroke="#1A1B18" stroke-width="1"/>
+        <text x="315" y="42" font-family="Be Vietnam Pro, sans-serif" font-size="10" fill="#5C5E58">Bếp mở</text>
+        <path d="M 280 190 A 24 24 0 0 1 328 190" fill="none" stroke="#1A1B18" stroke-width="1"/>
+        <text x="276" y="208" font-family="Be Vietnam Pro, sans-serif" font-size="10" fill="#5C5E58">Vòm hành lang</text>
+      </svg>`;
+
+    const SVG_WORKDESK = `
+      <svg viewBox="0 0 420 200" width="100%" height="auto" role="img" aria-label="Minh họa kiến trúc góc bàn làm việc với tờ mặt bằng 2D và mẫu vật liệu" style="display:block;max-width:420px;">
+        <line x1="16" y1="176" x2="404" y2="176" stroke="#1A1B18" stroke-width="1"/>
+        <!-- Tờ bản vẽ mặt bằng -->
+        <rect x="36" y="34" width="190" height="122" fill="none" stroke="#1A1B18" stroke-width="1"/>
+        <rect x="52" y="50" width="110" height="86" fill="none" stroke="#5C5E58" stroke-width="1"/>
+        <line x1="90" y1="50" x2="90" y2="136" stroke="#D6D1C6" stroke-width="1"/>
+        <line x1="52" y1="92" x2="162" y2="92" stroke="#D6D1C6" stroke-width="1"/>
+        <text x="52" y="148" font-family="Be Vietnam Pro, sans-serif" font-size="10" fill="#5C5E58">Hồ sơ mặt bằng 1:50</text>
+        <!-- Thước tỷ lệ -->
+        <rect x="36" y="162" width="140" height="8" fill="none" stroke="#1A1B18" stroke-width="1"/>
+        <line x1="64" y1="162" x2="64" y2="170" stroke="#1A1B18" stroke-width="1"/>
+        <line x1="92" y1="162" x2="92" y2="170" stroke="#1A1B18" stroke-width="1"/>
+        <line x1="120" y1="162" x2="120" y2="170" stroke="#1A1B18" stroke-width="1"/>
+        <!-- 3 mẫu vật liệu -->
+        <rect x="256" y="42" width="60" height="60" fill="#EAE6DC" stroke="#1A1B18" stroke-width="1"/>
+        <text x="256" y="116" font-family="Be Vietnam Pro, sans-serif" font-size="10" fill="#5C5E58">Gỗ sồi tự nhiên</text>
+        <rect x="330" y="42" width="60" height="60" fill="#3E4A36" stroke="#1A1B18" stroke-width="1"/>
+        <text x="330" y="116" font-family="Be Vietnam Pro, sans-serif" font-size="10" fill="#5C5E58">Vải lanh ô liu</text>
+      </svg>`;
+
+    const SVG_CHAIR_PULL = `
+      <svg viewBox="0 0 420 210" width="100%" height="auto" role="img" aria-label="Sơ đồ khoảng lùi kéo ghế ra khỏi bàn ăn và lối đi từ bếp" style="display:block;max-width:420px;">
+        <!-- Bàn ăn -->
+        <rect x="44" y="48" width="130" height="80" fill="none" stroke="#1A1B18" stroke-width="1"/>
+        <text x="86" y="92" font-family="Be Vietnam Pro, sans-serif" font-size="11" fill="#1A1B18">Bàn ăn</text>
+        <!-- Ghế đang đóng (nét đứt) -->
+        <rect x="180" y="66" width="28" height="44" fill="none" stroke="#5C5E58" stroke-width="1" stroke-dasharray="3 3"/>
+        <!-- Ghế kéo ra khi sử dụng -->
+        <rect x="224" y="66" width="32" height="44" fill="#EAE6DC" stroke="#1A1B18" stroke-width="1"/>
+        <!-- Đường kích thước khoảng lùi -->
+        <line x1="174" y1="146" x2="256" y2="146" stroke="#3E4A36" stroke-width="1"/>
+        <line x1="174" y1="140" x2="174" y2="152" stroke="#3E4A36" stroke-width="1"/>
+        <line x1="256" y1="140" x2="256" y2="152" stroke="#3E4A36" stroke-width="1"/>
+        <text x="176" y="166" font-family="Be Vietnam Pro, sans-serif" font-size="10" fill="#3E4A36">Khoảng kéo ghế 60–75 cm</text>
+        <!-- Lối đi từ bếp -->
+        <line x1="320" y1="24" x2="320" y2="172" stroke="#1A1B18" stroke-width="1" stroke-dasharray="5 4"/>
+        <polyline points="315,34 320,24 325,34" fill="none" stroke="#1A1B18" stroke-width="1"/>
+        <text x="278" y="190" font-family="Be Vietnam Pro, sans-serif" font-size="10" fill="#5C5E58">Lối đi từ bếp</text>
+      </svg>`;
+
+    function renderHeader(isMobile) {
+      const p = state.page;
+      const introActive = ['02', '03', '06'].includes(p) ? 'active' : '';
+      if (!isMobile) {
+        return `
+          <a href="#main-content" class="skip-link">Bỏ qua đến nội dung chính</a>
+          <header class="site-header">
+            <div class="header-inner">
+              <a href="#01" class="brand-link" data-nav="01">Nếp Studio</a>
+              <nav class="desktop-nav" aria-label="Điều hướng chính">
+                <a href="#01" class="nav-item ${p === '01' ? 'active' : ''}" data-nav="01">Trang chủ</a>
+                <div class="dropdown-wrap">
+                  <button type="button" class="nav-dropdown-btn ${introActive}" aria-expanded="false" data-action="toggle-dropdown">Giới thiệu ▾</button>
+                  <div class="dropdown-menu" data-dropdown-menu>
+                    <a href="#06" class="dropdown-link ${p === '06' ? 'active' : ''}" data-nav="06">Bộ sưu tập</a>
+                    <a href="#02" class="dropdown-link ${p === '02' ? 'active' : ''}" data-nav="02">Chi tiết dự án</a>
+                    <a href="#03" class="dropdown-link ${p === '03' ? 'active' : ''}" data-nav="03">Dịch vụ và bảng giá</a>
+                  </div>
+                </div>
+                <a href="#04" class="nav-item ${p === '04' ? 'active' : ''}" data-nav="04">Đặt lịch</a>
+                <a href="#07" class="nav-item ${['07', '08'].includes(p) ? 'active' : ''}" data-nav="07">Blog</a>
+                <a href="#09" class="nav-item ${p === '09' ? 'active' : ''}" data-nav="09">Liên hệ</a>
+              </nav>
+            </div>
+          </header>`;
+      }
+      return `
+        <header class="site-header">
+          <div class="header-inner">
+            <a href="#01" class="brand-link" data-nav="01">Nếp Studio</a>
+            <button type="button" class="mobile-menu-btn" aria-expanded="false" data-action="toggle-mobile-menu">Menu</button>
+          </div>
+          <nav class="mobile-drawer" aria-label="Điều hướng di động" data-mobile-drawer>
+            <a href="#01" class="mobile-nav-link" data-nav="01">Trang chủ</a>
+            <button type="button" class="mobile-sub-toggle" aria-expanded="false" data-action="toggle-mobile-sub">
+              <span>Giới thiệu ▾</span>
+            </button>
+            <div class="mobile-sub-list" data-mobile-sub>
+              <a href="#06" class="mobile-sub-link" data-nav="06">Bộ sưu tập</a>
+              <a href="#02" class="mobile-sub-link" data-nav="02">Chi tiết dự án</a>
+              <a href="#03" class="mobile-sub-link" data-nav="03">Dịch vụ và bảng giá</a>
+            </div>
+            <a href="#04" class="mobile-nav-link" data-nav="04">Đặt lịch</a>
+            <a href="#07" class="mobile-nav-link" data-nav="07">Blog</a>
+            <a href="#09" class="mobile-nav-link" data-nav="09">Liên hệ</a>
+          </nav>
+        </header>`;
+    }
+
+    function renderFooter() {
+      return `
+        <footer class="site-footer">
+          <div class="footer-inner">
+            <div class="footer-top">
+              <div class="footer-group">
+                <a href="#01" class="footer-link serif" style="font-size:18px;" data-nav="01">Nếp Studio</a>
+                <a href="#05" class="footer-link" data-nav="05">Về Nếp Studio</a>
+              </div>
+              <div class="footer-group">
+                <a href="#03" class="footer-link" data-nav="03">Dịch vụ và bảng giá</a>
+                <a href="#09" class="footer-link" data-nav="09">Liên hệ</a>
+              </div>
+            </div>
+            <div class="footer-note">Dự án minh họa · Giá minh họa</div>
+          </div>
+        </footer>`;
+    }
+
+    function renderPageContent(isMobile) {
+      const prefix = isMobile ? 'm' : 'd';
+
+      if (state.page === '01') {
+        return `
+          <section class="container">
+            <div class="grid-hero">
+              <div>
+                <span class="eyebrow tabular">Dự án tiêu biểu · 62 m²</span>
+                <h1>Căn hộ Hiên Nắng</h1>
+                <p class="muted">Bố trí lại phòng sinh hoạt chung để hai người đọc sách ngày thường và vẫn đủ chỗ khi bạn bè đến ăn tối.</p>
+                <div class="actions-row">
+                  <a href="#02" class="btn-primary" data-nav="02">Xem căn hộ</a>
+                  <a href="#03" class="text-link" data-nav="03">Xem bảng giá</a>
+                </div>
+              </div>
+              <div class="hero-media">
+                <img src="./assets/hien-nang-hero.jpg" alt="Căn hộ Hiên Nắng với băng ghế dài bên cửa sổ và bàn ăn gỗ sồi" class="photo" />
+              </div>
+            </div>
+
+            <div class="section-rule">
+              <div class="grid-2" style="align-items:center;">
+                <div style="display:flex;flex-direction:column;gap:20px;">
+                  ${SVG_FLOORPLAN_2D}
+                  <img src="./assets/hien-nang-cua-so.jpg" alt="Cận cảnh gối tựa vải lanh trên băng ghế bên cửa sổ" class="photo" />
+                </div>
+                <div>
+                  <span class="eyebrow">Chi tiết đáng nhìn</span>
+                  <h2>Một chỗ ngồi, hai nhịp sống</h2>
+                  <p class="muted">Đặt bàn ăn sát băng ghế cửa sổ biến góc đọc sách ban ngày thành một phía của bàn ăn khi có khách, giữ lối đi từ bếp luôn thoáng.</p>
+                  <div class="actions-row">
+                    <a href="#02" class="text-link" data-nav="02">Khám phá Hiên Nắng</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-rule">
+              <span class="eyebrow">Dịch vụ của Nếp</span>
+              <div class="grid-3" style="margin-top:24px;">
+                <div>
+                  <span class="eyebrow tabular">01</span>
+                  <h3>Tư vấn bố trí mặt bằng</h3>
+                  <p class="muted">Buổi trực tuyến 60 phút và sơ đồ bố trí 2D có chú thích cho căn hộ đến 70 m².</p>
+                  <div class="tabular" style="font-weight:500;">${formatVnd(PRICING_CONFIG.G01.unitPrice)}/căn</div>
+                </div>
+                <div>
+                  <span class="eyebrow tabular">02</span>
+                  <h3>Thiết kế nội thất</h3>
+                  <p class="muted">Mặt bằng bố trí, phối cảnh, bảng vật liệu và bản vẽ triển khai đồ nội thất.</p>
+                  <div class="tabular" style="font-weight:500;">${formatVnd(PRICING_CONFIG.G02.unitPrice)}/m²</div>
+                </div>
+                <div>
+                  <span class="eyebrow tabular">03</span>
+                  <h3>Đồng hành thi công</h3>
+                  <p class="muted">Đến công trình đối chiếu hạng mục với hồ sơ thiết kế và ghi chú trao đổi nhà thầu.</p>
+                  <div class="tabular" style="font-weight:500;">${formatVnd(PRICING_CONFIG.G03.unitPrice)}/buổi</div>
+                </div>
+              </div>
+              <div class="actions-row">
+                <a href="#03" class="text-link" data-nav="03">Xem dịch vụ và bảng giá</a>
+              </div>
+            </div>
+
+            <div class="section-rule">
+              <div class="grid-2" style="align-items:center;">
+                <div>
+                  <span class="eyebrow">Về Nếp Studio</span>
+                  <h2>Thiết kế không gian sống xoay quanh nhịp sống thường ngày</h2>
+                  <div style="border-top:1px solid var(--rule-hairline);margin-top:20px;">
+                    <div style="padding:12px 0;border-bottom:1px solid var(--rule-hairline);"><span class="tabular muted">01.</span> Kể về sinh hoạt</div>
+                    <div style="padding:12px 0;border-bottom:1px solid var(--rule-hairline);"><span class="tabular muted">02.</span> Xem phương án</div>
+                    <div style="padding:12px 0;border-bottom:1px solid var(--rule-hairline);"><span class="tabular muted">03.</span> Chốt hồ sơ</div>
+                  </div>
+                  <div class="actions-row">
+                    <a href="#05" class="text-link" data-nav="05">Về Nếp Studio</a>
+                  </div>
+                </div>
+                <div>
+                  <img src="./assets/hien-nang-binh-hoa.jpg" alt="Bình gốm và hoa trên bàn gỗ sồi cạnh cửa sổ" class="photo" />
+                </div>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      if (state.page === '02') {
+        return `
+          <section class="container">
+            <span class="eyebrow">Chi tiết dự án</span>
+            <h1>Hiên Nắng</h1>
+            <div class="spec-bar tabular">
+              <div class="spec-cell"><div class="spec-label">Diện tích</div><div class="spec-val">${SAMPLE_AREAS.hienNang} m²</div></div>
+              <div class="spec-cell"><div class="spec-label">Không gian</div><div class="spec-val">Khách · Bếp · Ăn</div></div>
+              <div class="spec-cell"><div class="spec-label">Gói thực hiện</div><div class="spec-val">Thiết kế nội thất</div></div>
+              <div class="spec-cell"><div class="spec-label">Chi phí thiết kế</div><div class="spec-val">${formatVnd(calcG02Fee(SAMPLE_AREAS.hienNang))}</div></div>
+            </div>
+
+            <img src="./assets/hien-nang-hero.jpg" alt="Toàn cảnh phòng sinh hoạt chung căn hộ Hiên Nắng 62 m²" class="photo" />
+
+            <div class="section-rule prose">
+              <h2>Một góc nhà cho ngày thường và những bữa có khách</h2>
+              <p>Gia chủ sống hai người trong căn hộ 62 m², muốn giữ không gian đọc sách thoáng sáng bên cửa sổ nhưng không bị chật khi bạn bè ghé ăn tối.</p>
+              <p>Thay vì đặt bàn ăn rời giữa phòng gây vướng lối đi, studio xoay bàn ăn về phía băng ghế dài chạy dọc cửa sổ. Hai chỗ ngồi cố định ngày thường kết hợp với hai ghế rời tạo thành bàn ăn 5–6 người mà vẫn chừa lối đi rộng từ khu bếp.</p>
+            </div>
+
+            <div class="section-rule">
+              <div class="grid-2">
+                <div>
+                  ${SVG_FLOORPLAN_2D}
+                  <p class="muted" style="font-size:14px;margin-top:12px;">Mặt bằng 2D Trước &amp; Sau khi kéo bàn ăn sát băng ghế cửa sổ.</p>
+                </div>
+                <div>
+                  <img src="./assets/hien-nang-bep-vom.jpg" alt="Góc bếp gỗ sồi mở và vòm hành lang nhìn vào phòng ngủ" class="photo" />
+                  <p class="muted" style="font-size:14px;margin-top:12px;">Góc bếp mở &amp; hành lang vòm giữ tầm nhìn xuyên suốt căn hộ.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-rule">
+              <div class="grid-2" style="align-items:center;">
+                <img src="./assets/hien-nang-ke-sach.jpg" alt="Băng ghế bên cửa sổ và kệ sách gỗ sồi âm tường" class="photo" />
+                <div>
+                  <span class="eyebrow">Chi tiết đáng nhìn</span>
+                  <h2>Băng ghế bên cửa sổ</h2>
+                  <p class="muted">Đầu băng ghế nối liền kệ sách âm tường gỗ sồi, phần đệm vải lanh xanh ô liu có chiều sâu vừa vặn để tựa lưng đọc sách lẫn ngồi ăn cơm.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="cta-band">
+              <h2>Bạn cũng muốn bố trí lại góc ăn và cần bản vẽ để làm đồ?</h2>
+              <div class="actions-row">
+                <a href="#03" class="btn-primary" data-view-pkg="G02">Xem gói Thiết kế nội thất</a>
+                <a href="#03" class="text-link" data-view-pkg="G01">Xem Tư vấn bố trí mặt bằng</a>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      if (state.page === '03') {
+        return `
+          <section class="container">
+            <span class="eyebrow">Giá minh họa cho template</span>
+            <h1>Dịch vụ và bảng giá</h1>
+            <p class="muted" style="max-width:60ch;margin-bottom:36px;">Một phương án bố trí, một bộ bản vẽ hay một buổi tại công trình. Không cộng phí vật liệu hoặc tiền thi công vào giá thiết kế.</p>
+
+            <div class="fee-row ${state.highlightPkg === 'G01' ? 'is-highlighted' : ''}" data-pkg-row="G01">
+              <div>
+                <span class="fee-num tabular">01</span>
+                <h2>Tư vấn bố trí mặt bằng</h2>
+                <p>Một buổi trực tuyến 60 phút cho căn hộ đến 70 m². Khách gửi mặt bằng có kích thước và ảnh hiện trạng. Sau buổi, nhận 1 sơ đồ bố trí có chú thích và 1 lượt góp ý chỉnh sơ đồ.</p>
+                <p class="muted" style="font-size:14px;">Phát sinh: Đo tại nhà, thêm phương án hoặc căn lớn hơn 70 m² được báo riêng để khách đồng ý trước. Phối cảnh và bản vẽ đóng đồ thuộc gói 02.</p>
+              </div>
+              <div>
+                <div class="fee-price tabular">${formatVnd(PRICING_CONFIG.G01.unitPrice)}/căn</div>
+                <div class="fee-meta">Căn ${SAMPLE_AREAS.smallApt} m² và ${SAMPLE_AREAS.hienNang} m² cùng mức phí trong phạm vi này.</div>
+                <div class="actions-row">
+                  <button type="button" class="btn-outline" data-book-pkg="G01">Đặt lịch tư vấn</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="fee-row ${state.highlightPkg === 'G02' ? 'is-highlighted' : ''}" data-pkg-row="G02">
+              <div>
+                <span class="fee-num tabular">02</span>
+                <h2>Thiết kế nội thất</h2>
+                <p>Mặt bằng bố trí, phối cảnh các phòng trong phạm vi, bảng vật liệu và bản vẽ triển khai đồ nội thất đã thống nhất. Gồm 2 vòng chỉnh sửa tổng hợp.</p>
+                <p class="muted" style="font-size:14px;">Phát sinh: Đổi phạm vi sau duyệt, thêm vòng sửa hoặc khảo sát ngoài phạm vi được báo riêng. Khách duyệt phí trước khi làm.</p>
+              </div>
+              <div>
+                <div class="fee-price tabular">${formatVnd(PRICING_CONFIG.G02.unitPrice)}/m²</div>
+                <div class="fee-meta tabular">Tối thiểu ${formatVnd(PRICING_CONFIG.G02.minPrice)}/căn (tính trên diện tích thực tế thiết kế).</div>
+                <div class="fee-example tabular">
+                  <div>Hiên Nắng ${SAMPLE_AREAS.hienNang} m²: ${SAMPLE_AREAS.hienNang} × ${PRICING_CONFIG.G02.unitPrice.toLocaleString('vi-VN')} = ${formatVnd(calcG02Fee(SAMPLE_AREAS.hienNang))}</div>
+                  <div>Căn ${SAMPLE_AREAS.smallApt} m²: áp mức tối thiểu ${formatVnd(calcG02Fee(SAMPLE_AREAS.smallApt))}</div>
+                </div>
+                <div class="actions-row">
+                  <button type="button" class="btn-primary" data-book-pkg="G02">Đặt lịch tư vấn</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="fee-row ${state.highlightPkg === 'G03' ? 'is-highlighted' : ''}" data-pkg-row="G03">
+              <div>
+                <span class="fee-num tabular">03</span>
+                <h2>Đồng hành thi công</h2>
+                <p>Một lần đến công trình (tối đa 2 giờ) trong khu vực studio công bố để đối chiếu 1 hạng mục với hồ sơ thiết kế. Sau buổi nhận ghi chú, ảnh và điểm cần trao đổi với nhà thầu.</p>
+                <p class="muted" style="font-size:14px;">Phát sinh: Thêm buổi tính theo đơn giá; đi xa hoặc kéo dài buổi được báo riêng trước khi đặt. Nhà thầu phụ trách thi công và bảo hành.</p>
+              </div>
+              <div>
+                <div class="fee-price tabular">${formatVnd(PRICING_CONFIG.G03.unitPrice)}/buổi</div>
+                <div class="fee-meta tabular">Gói ${PRICING_CONFIG.G03.bundleSessions} buổi trong phạm vi: ${formatVnd(G03_BUNDLE_PRICE)}.</div>
+                <div class="actions-row">
+                  <button type="button" class="btn-outline" data-book-pkg="G03">Đặt lịch tư vấn</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-rule">
+              <h2>Hỏi nhanh về chi phí</h2>
+              <div style="margin-top:20px;">
+                <details class="faq-item">
+                  <summary><span>Chi phí thiết kế có bao gồm tiền thi công và vật liệu không?</span></summary>
+                  <p>Không. Đơn giá thiết kế tách bạch hoàn toàn với vật liệu và thi công để bạn chủ động lựa chọn đơn vị thực hiện.</p>
+                </details>
+                <details class="faq-item">
+                  <summary><span>Căn hộ nhỏ dưới ${G02_MIN_THRESHOLD_AREA} m² tính phí gói Thiết kế nội thất thế nào?</span></summary>
+                  <p>Nhân diện tích thiết kế với ${formatVnd(PRICING_CONFIG.G02.unitPrice)}/m² và đối chiếu mức tối thiểu ${formatVnd(PRICING_CONFIG.G02.minPrice)}/căn. Ví dụ căn ${SAMPLE_AREAS.smallApt} m² áp mức tối thiểu ${formatVnd(calcG02Fee(SAMPLE_AREAS.smallApt))}.</p>
+                </details>
+                <details class="faq-item">
+                  <summary><span>Thuế và chi phí đi lại ngoài khu vực công bố tính ra sao?</span></summary>
+                  <p>Chính sách thuế và phụ phí đi xa được studio thông báo rõ trước khi bạn xác nhận thực hiện.</p>
+                </details>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      if (state.page === '04') {
+        const pkg = state.selectedPkg && PACKAGES[state.selectedPkg] ? PACKAGES[state.selectedPkg] : null;
+        const summaryTitle = pkg ? `${pkg.name} · ${pkg.price}` : 'Chưa chọn gói cụ thể';
+        const summaryScope = pkg ? pkg.scope : 'Bạn có thể chọn một trong ba gói tư vấn ngay trong biểu mẫu bên cạnh.';
+        const summaryExtra = pkg ? pkg.extra : '';
+
+        const formOrConfirm = state.bookingSubmitted ? `
+          <div class="confirm-box" role="status" aria-live="polite">
+            <span class="eyebrow">Trạng thái: Sau khi gửi</span>
+            <h2>Gửi thử thành công</h2>
+            <p>Bản mẫu chỉ mô phỏng thao tác gửi thử cho gói ${pkg ? pkg.name : 'tư vấn'} qua ${state.bookingMethod}. Khi studio gắn nơi tiếp nhận thật, hệ thống mới gửi yêu cầu và báo studio đã tiếp nhận sau khi nhận phản hồi thành công.</p>
+            <div class="actions-row">
+              <button type="button" class="text-link" data-action="reset-booking">Quay lại biểu mẫu</button>
+            </div>
+          </div>` : `
+          <form novalidate data-action="booking-form">
+            <div class="grid-2" style="gap:24px;margin-bottom:0;">
+              <div class="field">
+                <label for="${prefix}-pkg">Gói quan tâm *</label>
+                <select id="${prefix}-pkg" name="pkg" data-field="pkg" required>
+                  <option value="" ${state.selectedPkg === '' ? 'selected' : ''}>Chọn gói</option>
+                  <option value="G01" ${state.selectedPkg === 'G01' ? 'selected' : ''}>Tư vấn bố trí mặt bằng</option>
+                  <option value="G02" ${state.selectedPkg === 'G02' ? 'selected' : ''}>Thiết kế nội thất</option>
+                  <option value="G03" ${state.selectedPkg === 'G03' ? 'selected' : ''}>Đồng hành thi công</option>
+                </select>
+                <div class="error-msg" data-error="pkg">Bạn chọn một gói dịch vụ nhé.</div>
+              </div>
+              <div class="field">
+                <label for="${prefix}-area">Diện tích ước tính (m²)</label>
+                <input id="${prefix}-area" type="number" min="10" placeholder="Ví dụ: 62" value="${state.bookingArea}" data-field="area" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="${prefix}-name">Nếp có thể gọi bạn là gì? *</label>
+              <input id="${prefix}-name" type="text" placeholder="Tên của bạn" value="${state.bookingName}" data-field="name" required />
+              <div class="error-msg" data-error="name">Bạn nhập tên để studio tiện xưng hô nhé.</div>
+            </div>
+
+            <div class="field">
+              <label>Cách liên hệ *</label>
+              <div class="radio-row">
+                <label class="radio-opt">
+                  <input type="radio" name="${prefix}-method" value="Điện thoại" ${state.bookingMethod === 'Điện thoại' ? 'checked' : ''} data-field="method" />
+                  <span>Điện thoại</span>
+                </label>
+                <label class="radio-opt">
+                  <input type="radio" name="${prefix}-method" value="Email" ${state.bookingMethod === 'Email' ? 'checked' : ''} data-field="method" />
+                  <span>Email</span>
+                </label>
+              </div>
+              <label for="${prefix}-contact" style="margin-top:8px;">${state.bookingMethod === 'Email' ? 'Địa chỉ email *' : 'Số điện thoại *'}</label>
+              <input id="${prefix}-contact" type="${state.bookingMethod === 'Email' ? 'email' : 'tel'}" placeholder="${state.bookingMethod === 'Email' ? 'ten@example.com' : '09xx xxx xxx'}" value="${state.bookingContact}" data-field="contact" required />
+              <div class="error-msg" data-error="contact">Bạn nhập số điện thoại hoặc email để studio phản hồi nhé.</div>
+            </div>
+
+            <div class="field">
+              <label for="${prefix}-note">Bạn muốn thay đổi điều gì trong nhà?</label>
+              <textarea id="${prefix}-note" rows="2" placeholder="Ví dụ: góc ăn hơi chật khi có khách" data-field="note">${state.bookingNote}</textarea>
+            </div>
+
+            <div class="field">
+              <label for="${prefix}-time">Khi nào tiện để studio liên hệ?</label>
+              <input id="${prefix}-time" type="text" placeholder="Ví dụ: buổi tối sau 19h hoặc cuối tuần" value="${state.bookingTime}" data-field="time" />
+            </div>
+
+            <div style="margin-top:28px;">
+              <button type="submit" class="btn-primary" style="width:100%;">Gửi yêu cầu tư vấn</button>
+              <p class="muted" style="font-size:13px;margin:12px 0 4px;">Gửi yêu cầu chưa phải xác nhận lịch hẹn.</p>
+              <p class="muted" style="font-size:13px;margin:0;">Studio sẽ dùng thông tin bạn gửi để trao đổi về yêu cầu này.</p>
+            </div>
+          </form>`;
+
+        return `
+          <section class="container">
+            <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:24px;">
+              <div>
+                <span class="eyebrow">Đặt lịch tư vấn</span>
+                <h1>Bạn muốn trao đổi về căn hộ nào?</h1>
+              </div>
+              <button type="button" class="text-link" data-action="toggle-submitted-preview" style="font-size:13px;">
+                ${state.bookingSubmitted ? 'Xem trạng thái: Biểu mẫu' : 'Xem trạng thái: Sau khi gửi'}
+              </button>
+            </div>
+
+            ${isMobile ? `
+              <div class="mobile-summary-line">
+                <button type="button" class="mobile-summary-trigger" aria-expanded="false" data-action="toggle-mobile-summary">
+                  <span class="tabular">Đang chọn: ${pkg ? pkg.name : 'Chọn gói'}</span>
+                  <span style="text-decoration:underline;text-underline-offset:3px;">Xem chi tiết</span>
+                </button>
+                <div class="mobile-summary-detail" data-mobile-summary-detail>
+                  <p style="margin-bottom:8px;"><strong>${summaryTitle}</strong></p>
+                  <p style="margin-bottom:8px;">${summaryScope}</p>
+                  ${summaryExtra ? `<p style="margin-bottom:0;">${summaryExtra}</p>` : ''}
+                </div>
+              </div>
+              ${formOrConfirm}
+            ` : `
+              <div class="booking-grid">
+                <aside class="summary-box">
+                  <span class="eyebrow">Gói dịch vụ đang chọn</span>
+                  <h3 class="tabular">${summaryTitle}</h3>
+                  <p style="font-size:14px;">${summaryScope}</p>
+                  ${summaryExtra ? `<p class="muted" style="font-size:13px;">${summaryExtra}</p>` : ''}
+                  <div style="border-top:1px solid var(--rule-hairline);margin-top:20px;padding-top:16px;font-size:14px;">
+                    <div style="margin-bottom:8px;"><span class="tabular muted">01.</span> Tiếp nhận yêu cầu</div>
+                    <div style="margin-bottom:8px;"><span class="tabular muted">02.</span> Liên hệ thống nhất giờ</div>
+                    <div><span class="tabular muted">03.</span> Trao đổi phương án</div>
+                  </div>
+                </aside>
+                <div>${formOrConfirm}</div>
+              </div>
+            `}
+          </section>`;
+      }
+
+      if (state.page === '05') {
+        return `
+          <section class="container">
+            <div class="grid-2" style="align-items:center;">
+              <div>
+                <span class="eyebrow">Về Nếp Studio</span>
+                <h1>Một căn nhà bắt đầu từ cách bạn sống</h1>
+                <p class="muted">Nếp Studio bắt đầu mỗi phương án từ thói quen ăn ở, cất đồ và đón sáng hằng ngày thay vì áp đặt khuôn mẫu có sẵn.</p>
+              </div>
+              <div>
+                <img src="./assets/hien-nang-binh-hoa.jpg" alt="Góc bàn gỗ sồi và bình gốm trong căn hộ Hiên Nắng" class="photo" />
+              </div>
+            </div>
+
+            <div class="section-rule">
+              <div class="grid-2" style="align-items:center;">
+                <div>${SVG_WORKDESK}</div>
+                <div>
+                  <span class="eyebrow">Quy trình làm việc</span>
+                  <div style="border-top:1px solid var(--rule-hairline);">
+                    <div style="padding:18px 0;border-bottom:1px solid var(--rule-hairline);">
+                      <div class="tabular muted" style="font-size:13px;">01</div>
+                      <h3 style="margin-bottom:4px;">Kể về sinh hoạt</h3>
+                      <p class="muted" style="margin:0;font-size:15px;">Chia sẻ thói quen dùng phòng, số người ở và những món đồ bạn muốn giữ lại.</p>
+                    </div>
+                    <div style="padding:18px 0;border-bottom:1px solid var(--rule-hairline);">
+                      <div class="tabular muted" style="font-size:13px;">02</div>
+                      <h3 style="margin-bottom:4px;">Xem phương án</h3>
+                      <p class="muted" style="margin:0;font-size:15px;">Đối chiếu mặt bằng 2D, hướng ánh sáng tự nhiên và luồng di chuyển thực tế.</p>
+                    </div>
+                    <div style="padding:18px 0;border-bottom:1px solid var(--rule-hairline);">
+                      <div class="tabular muted" style="font-size:13px;">03</div>
+                      <h3 style="margin-bottom:4px;">Chốt hồ sơ</h3>
+                      <p class="muted" style="margin:0;font-size:15px;">Hoàn thiện bảng vật liệu gỗ, vải lanh và bản vẽ triển khai rõ ràng để thi công.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cta-band">
+              <p style="margin-bottom:4px;">Khu vực phục vụ minh họa: Tư vấn mặt bằng trực tuyến và khảo sát theo phạm vi công bố của studio.</p>
+              <div class="actions-row">
+                <a href="#02" class="btn-primary" data-nav="02">Xem căn hộ Hiên Nắng</a>
+                <a href="#03" class="text-link" data-nav="03">Xem dịch vụ và bảng giá</a>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      if (state.page === '06') {
+        return `
+          <section class="container">
+            <span class="eyebrow">Bộ sưu tập</span>
+            <h1>Những căn hộ và cách chúng được sử dụng</h1>
+            <div style="margin-top:36px;max-width:760px;">
+              <img src="./assets/hien-nang-hero.jpg" alt="Căn hộ Hiên Nắng 62 m² với băng ghế cửa sổ và bàn ăn gỗ sồi" class="photo" />
+              <div style="border-bottom:1px solid var(--rule-hairline);padding:20px 0 28px;">
+                <span class="eyebrow tabular" style="margin-bottom:6px;">62 m² · Dự án minh họa</span>
+                <h2 style="margin-bottom:8px;">Căn hộ Hiên Nắng</h2>
+                <p class="muted" style="margin-bottom:16px;">Góc đọc bên cửa sổ trở thành chỗ ngồi cho bữa tối.</p>
+                <a href="#02" class="text-link" data-nav="02">Xem căn hộ</a>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      if (state.page === '07') {
+        return `
+          <section class="container">
+            <span class="eyebrow">Blog</span>
+            <h1>Chuyện bố trí nhà</h1>
+
+            <div class="section-rule" style="margin-top:24px;">
+              <div class="grid-2" style="align-items:center;">
+                <div>${SVG_CHAIR_PULL}</div>
+                <div>
+                  <span class="eyebrow">Ghi chép bố trí</span>
+                  <h2>Trước khi mua bàn ăn, hãy thử kéo ghế</h2>
+                  <p class="muted">Một chiếc bàn có thể vừa với khoảng sàn trống mà vẫn vướng lúc dùng. Chính động tác kéo ghế ra mới cho thấy phần sàn bạn cần chừa.</p>
+                  <div class="actions-row">
+                    <a href="#08" class="text-link" data-nav="08">Đọc bài viết</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-rule">
+              <h2>Hỏi Nếp</h2>
+              <div style="margin-top:20px;">
+                <details class="faq-item" open>
+                  <summary><span>Chưa có bản vẽ căn hộ thì bắt đầu thế nào?</span></summary>
+                  <p>Hãy chụp các góc phòng và ghi lại kích thước bạn đo được. Gói tư vấn trong bản mẫu cần mặt bằng có kích thước để vẽ phương án. Studio sẽ cho biết phần nào cần đo bổ sung.</p>
+                </details>
+                <details class="faq-item">
+                  <summary><span>Có thể giữ lại bàn hoặc tủ cũ không?</span></summary>
+                  <p>Có thể lấy món đồ đó làm điểm xuất phát. Hãy gửi ảnh cùng chiều dài, rộng và cao để thử vị trí trên mặt bằng.</p>
+                </details>
+                <details class="faq-item">
+                  <summary><span>Chỉ muốn sắp lại bàn ghế thì chọn gói nào?</span></summary>
+                  <p>Chọn Tư vấn bố trí mặt bằng để nhận sơ đồ có chú thích. Nếu cần phối cảnh, vật liệu và bản vẽ đóng đồ, xem gói Thiết kế nội thất. <a href="#03" class="text-link" data-nav="03" style="min-height:auto;">Xem dịch vụ và bảng giá</a></p>
+                </details>
+                <details class="faq-item">
+                  <summary><span>Căn nhỏ tính phí thiết kế thế nào?</span></summary>
+                  <p>Nhân diện tích thiết kế với ${formatVnd(PRICING_CONFIG.G02.unitPrice)}/m² và đối chiếu mức tối thiểu ${formatVnd(PRICING_CONFIG.G02.minPrice)}/căn (ví dụ căn ${SAMPLE_AREAS.smallApt} m² áp mức ${formatVnd(calcG02Fee(SAMPLE_AREAS.smallApt))}). <a href="#03" class="text-link" data-view-pkg="G02" style="min-height:auto;">Xem dịch vụ và bảng giá</a></p>
+                </details>
+                <details class="faq-item">
+                  <summary><span>Đặt lịch có đồng nghĩa studio sẽ đến công trình không?</span></summary>
+                  <p>Sau khi gửi yêu cầu, studio liên hệ để thống nhất thời gian và phạm vi. Nếu muốn đối chiếu hạng mục đang thi công với hồ sơ, chọn Đồng hành thi công. <a href="#04" class="text-link" data-nav="04" style="min-height:auto;">Đặt lịch</a></p>
+                </details>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      if (state.page === '08') {
+        return `
+          <section class="container">
+            <div style="margin-bottom:24px;">
+              <a href="#07" class="text-link" data-nav="07">Chuyện bố trí nhà</a>
+            </div>
+            <div class="prose">
+              <h1>Trước khi mua bàn ăn, hãy thử kéo ghế</h1>
+              <div style="margin:28px 0;">${SVG_CHAIR_PULL}</div>
+              <p>Một chiếc bàn có thể vừa với khoảng sàn trống mà vẫn vướng lúc dùng. Điều đáng thử là chuyện xảy ra đúng giờ cơm: một người đang ngồi, người kia bê tô canh từ bếp ra, rồi cả hai cùng đứng dậy.</p>
+              <p><strong>Đánh dấu mặt bàn trên sàn.</strong> Dùng băng giấy đánh dấu bốn góc theo kích thước bàn bạn đang cân nhắc. Lấy một chiếc ghế đang dùng, đặt vào đúng phía bạn định ngồi rồi kéo ra như khi rời bàn. Giữ ghế ở đó và đi thử từ bếp qua. Chính động tác kéo ghế mới cho thấy phần sàn bạn cần chừa.</p>
+              <p><strong>Thử một bữa thường và một bữa có khách.</strong> Đặt hai bát lên bàn cho bữa thường. Sau đó nghĩ đến người thứ ba, thứ tư: họ lấy ghế từ đâu, ai cần đứng lên để nhường đường? Trong phương án Hiên Nắng, băng ghế ở sẵn bên cửa sổ. Khi kê bàn về phía ấy, một chỗ đọc sách có thể trở thành một phía của bàn ăn.</p>
+              <p><strong>Chụp lại chỗ bị vướng.</strong> Một tấm ảnh khi ghế đang kéo ra và một sơ đồ có kích thước hữu ích hơn ảnh căn phòng đã dọn gọn. Ghi thêm món đồ bạn muốn giữ. Khi trao đổi về mặt bằng, hai bên có thể bắt đầu từ đúng góc thường bất tiện nhất.</p>
+            </div>
+            <div class="cta-band" style="max-width:66ch;">
+              <div class="actions-row" style="margin-top:0;">
+                <a href="#02" class="btn-primary" data-nav="02">Xem góc bàn ăn Hiên Nắng</a>
+                <a href="#03" class="text-link" data-nav="03">Xem gói Tư vấn bố trí mặt bằng</a>
+              </div>
+            </div>
+          </section>`;
+      }
+
+      // Page 09: Liên hệ
+      return `
+        <section class="container">
+          <div class="contact-grid">
+            <div>
+              <span class="eyebrow">Liên hệ</span>
+              <h1>Trao đổi với Nếp</h1>
+              <p class="muted">Bạn có thể gửi nhu cầu và chọn cách để studio liên hệ lại.</p>
+              <div class="actions-row">
+                <a href="#04" class="btn-primary" data-nav="04">Gửi yêu cầu tư vấn</a>
+                <a href="#03" class="text-link" data-nav="03">Xem dịch vụ và bảng giá</a>
+              </div>
+            </div>
+            <div>
+              <img src="./assets/hien-nang-cua-so.jpg" alt="Cận cảnh gối tựa vải lanh bên khung cửa sổ ngập nắng" class="photo" />
+            </div>
+          </div>
+        </section>`;
+    }
+
+    function renderAll() {
+      const dFrame = document.querySelector('[data-frame="desktop"]');
+      const mFrame = document.querySelector('[data-frame="mobile"]');
+      dFrame.innerHTML = renderHeader(false) + `<div id="main-content">${renderPageContent(false)}</div>` + renderFooter();
+      mFrame.innerHTML = renderHeader(true) + `<div>${renderPageContent(true)}</div>` + renderFooter();
+      bindEvents();
+      syncControlBar();
+    }
+
+    function syncControlBar() {
+      document.querySelectorAll('[data-set-page]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.setPage === state.page);
+      });
+      document.querySelectorAll('[data-set-mode]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.setMode === state.mode);
+      });
+      const stageEl = document.getElementById('stageMain');
+      if (stageEl) stageEl.classList.toggle('mode-both', state.mode === 'both');
+      const dWrap = document.querySelector('[data-viewport="desktop"]');
+      const mWrap = document.querySelector('[data-viewport="mobile"]');
+      dWrap.classList.toggle('is-hidden', state.mode === 'mobile');
+      mWrap.classList.toggle('is-hidden', state.mode === 'desktop');
+    }
+
+    function navigateTo(page, pkg, highlightPkg = '') {
+      if (pkg !== undefined) state.selectedPkg = pkg;
+      state.highlightPkg = page === '03' ? highlightPkg : '';
+      state.page = page;
+      state.bookingSubmitted = false;
+      history.replaceState(null, '', `?page=${page}`);
+      renderAll();
+      if (page === '03' && highlightPkg) {
+        requestAnimationFrame(() => {
+          const targetRow = document.querySelector(`.viewport-wrap:not(.is-hidden) [data-pkg-row="${highlightPkg}"]`)
+            || document.querySelector(`[data-pkg-row="${highlightPkg}"]`);
+          if (targetRow) {
+            targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }
+    }
+
+    function bindEvents() {
+      document.querySelectorAll('[data-nav]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          navigateTo(el.dataset.nav);
+        });
+      });
+
+      document.querySelectorAll('[data-view-pkg]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          navigateTo('03', undefined, el.dataset.viewPkg);
+        });
+      });
+
+      document.querySelectorAll('[data-book-pkg]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          navigateTo('04', el.dataset.bookPkg);
+        });
+      });
+
+      // Desktop Dropdown with Keyboard Support (Enter/Space/Escape)
+      document.querySelectorAll('[data-action="toggle-dropdown"]').forEach(btn => {
+        const menu = btn.parentElement.querySelector('[data-dropdown-menu]');
+        btn.addEventListener('click', () => {
+          const isOpen = menu.classList.toggle('open');
+          btn.setAttribute('aria-expanded', String(isOpen));
+        });
+        btn.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            menu.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.focus();
+          }
+        });
+        menu.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            menu.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.focus();
+          }
+        });
+      });
+
+      // Mobile Menu Drawer
+      document.querySelectorAll('[data-action="toggle-mobile-menu"]').forEach(btn => {
+        const frame = btn.closest('[data-frame]');
+        const drawer = frame.querySelector('[data-mobile-drawer]');
+        btn.addEventListener('click', () => {
+          const isOpen = drawer.classList.toggle('open');
+          btn.setAttribute('aria-expanded', String(isOpen));
+        });
+      });
+
+      document.querySelectorAll('[data-action="toggle-mobile-sub"]').forEach(btn => {
+        const sub = btn.nextElementSibling;
+        btn.addEventListener('click', () => {
+          const isOpen = sub.classList.toggle('open');
+          btn.setAttribute('aria-expanded', String(isOpen));
+        });
+      });
+
+      // Mobile Booking Summary Toggle
+      document.querySelectorAll('[data-action="toggle-mobile-summary"]').forEach(btn => {
+        const detail = btn.parentElement.querySelector('[data-mobile-summary-detail]');
+        btn.addEventListener('click', () => {
+          const isOpen = detail.classList.toggle('open');
+          btn.setAttribute('aria-expanded', String(isOpen));
+        });
+      });
+
+      // Booking Form Sync & Submit (all viewports)
+      document.querySelectorAll('[data-field]').forEach(input => {
+        input.addEventListener('change', (e) => {
+          const f = e.target.dataset.field;
+          if (f === 'pkg') { state.selectedPkg = e.target.value; renderAll(); }
+          if (f === 'area') state.bookingArea = e.target.value;
+          if (f === 'name') state.bookingName = e.target.value;
+          if (f === 'method') { state.bookingMethod = e.target.value; renderAll(); }
+          if (f === 'contact') state.bookingContact = e.target.value;
+          if (f === 'note') state.bookingNote = e.target.value;
+          if (f === 'time') state.bookingTime = e.target.value;
+        });
+      });
+
+      document.querySelectorAll('[data-action="booking-form"]').forEach(form => {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          let valid = true;
+          const pkgEl = form.querySelector('[data-field="pkg"]');
+          const nameEl = form.querySelector('[data-field="name"]');
+          const contactEl = form.querySelector('[data-field="contact"]');
+
+          form.querySelectorAll('.error-msg').forEach(m => m.classList.remove('show'));
+
+          if (!pkgEl.value) { form.querySelector('[data-error="pkg"]').classList.add('show'); valid = false; }
+          if (!nameEl.value.trim()) { form.querySelector('[data-error="name"]').classList.add('show'); valid = false; }
+          if (!contactEl.value.trim()) { form.querySelector('[data-error="contact"]').classList.add('show'); valid = false; }
+
+          if (valid) {
+            state.selectedPkg = pkgEl.value;
+            state.bookingName = nameEl.value.trim();
+            state.bookingContact = contactEl.value.trim();
+            state.bookingSubmitted = true;
+            renderAll();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-action="reset-booking"], [data-action="toggle-submitted-preview"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.bookingSubmitted = !state.bookingSubmitted;
+          renderAll();
+        });
+      });
+    }
+
+    // Studio Control Bar Events
+    document.querySelectorAll('[data-set-page]').forEach(btn => {
+      btn.addEventListener('click', () => navigateTo(btn.dataset.setPage));
+    });
+    document.querySelectorAll('[data-set-mode]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.mode = btn.dataset.setMode;
+        syncControlBar();
+      });
+    });
+    document.querySelector('[data-action="toggle-bar"]').addEventListener('click', (e) => {
+      const bar = document.getElementById('studioBar');
+      const collapsed = bar.classList.toggle('is-collapsed');
+      e.target.textContent = collapsed ? 'Mở thanh điều khiển' : 'Thu gọn thanh';
+    });
+
+    // Init from URL ?page= or #hash
+    (function init() {
+      const params = new URLSearchParams(window.location.search);
+      const qPage = params.get('page') || window.location.hash.replace('#', '');
+      if (qPage && /^0[1-9]$/.test(qPage)) state.page = qPage;
+      renderAll();
+    })();
+  </script>
+</body>
+</html>

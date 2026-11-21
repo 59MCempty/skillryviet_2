@@ -1,0 +1,14 @@
+:root {
+  --bg-paper: #F3F0E8;
+  --bg-limestone: #EAE6DC;
+  --ink-charcoal: #1A1B18;
+  --ink-muted: #5C5E58;
+  --accent-moss: #3E4A36;
+  --accent-moss-hover: #2F3929;
+  --rule-hairline: #D6D1C6;
+  --error-clay: #8A2C22;
+  --font-display: 'Newsreader', Georgia, serif;
+  --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+  --motion-fast: 180ms ease;
+  --motion-med: 250ms ease;
+}

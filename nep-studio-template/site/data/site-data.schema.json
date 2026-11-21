@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Nếp Studio Template Site Data",
+  "type": "object",
+  "required": ["meta", "brand", "contact", "packages", "serviceFaqs", "projects", "blog", "booking"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["isDemo", "demoNotice", "priceDisclaimer"],
+      "properties": {
+        "isDemo": { "type": "boolean" },
+        "demoNotice": { "type": "string" },
+        "priceDisclaimer": { "type": "string" }
+      }
+    },
+    "brand": {
+      "type": "object",
+      "required": ["name", "tagline", "serviceArea"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "logoImage": { "type": "string" },
+        "logoAlt": { "type": "string" },
+        "tagline": { "type": "string" },
+        "serviceArea": { "type": "string" }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "properties": {
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "type": "string" },
+        "hours": { "type": "string" }
+      }
+    },
+    "packages": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["id", "number", "name", "pricingType", "unitPrice", "unitLabel", "deliverables", "extras"],
+        "properties": {
+          "id": { "type": "string", "enum": ["G01", "G02", "G03"] },
+          "pricingType": { "type": "string", "enum": ["flat", "per_m2", "per_session"] },
+          "unitPrice": { "type": "number", "minimum": 0 },
+          "minPrice": { "type": "number", "minimum": 0 }
+        }
+      }
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["slug", "name", "areaM2", "primaryPackageId", "images", "story"]
+      }
+    },
+    "blog": {
+      "type": "object",
+      "required": ["title", "posts", "faqs"]
+    },
+    "booking": {
+      "type": "object",
+      "required": ["submission", "messages"],
+      "properties": {
+        "submission": {
+          "type": "object",
+          "required": ["mode"],
+          "properties": {
+            "mode": { "type": "string", "enum": ["demo", "formspree", "web3forms"] },
+            "endpoint": { "type": "string" },
+            "accessKey": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

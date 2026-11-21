@@ -1,0 +1,336 @@
+{
+  "meta": {
+    "isDemo": true,
+    "copyrightYear": "2026",
+    "demoNotice": "Dự án minh họa · Giá minh họa",
+    "priceDisclaimer": "Giá minh họa cho template. Không cộng phí vật liệu hoặc tiền thi công vào giá thiết kế."
+  },
+  "brand": {
+    "name": "Nếp Studio",
+    "logoImage": "",
+    "logoAlt": "Nếp Studio",
+    "tagline": "Thiết kế không gian sống xoay quanh nhịp sống thường ngày.",
+    "footerQuickLinks": [
+      { "label": "Về Nếp", "href": "gioi-thieu.html" },
+      { "label": "Bộ sưu tập", "href": "bo-suu-tap.html" },
+      { "label": "Đặt lịch", "href": "dat-lich.html" }
+    ],
+    "aboutTitle": "Một căn nhà bắt đầu từ cách bạn sống",
+    "aboutLead": "Nếp Studio bắt đầu mỗi phương án từ thói quen ăn ở, cất đồ và đón sáng hằng ngày thay vì áp đặt khuôn mẫu có sẵn.",
+    "aboutImage": "assets/images/hien-nang-binh-hoa.jpg",
+    "aboutImageAlt": "Góc bàn gỗ sồi và bình gốm trong căn hộ Hiên Nắng",
+    "processSteps": [
+      {
+        "number": "01",
+        "title": "Kể về sinh hoạt",
+        "description": "Chia sẻ thói quen dùng phòng, số người ở và những món đồ bạn muốn giữ lại."
+      },
+      {
+        "number": "02",
+        "title": "Xem phương án",
+        "description": "Đối chiếu mặt bằng 2D, hướng ánh sáng tự nhiên và luồng di chuyển thực tế."
+      },
+      {
+        "number": "03",
+        "title": "Chốt hồ sơ",
+        "description": "Hoàn thiện bảng vật liệu gỗ, vải lanh và bản vẽ triển khai rõ ràng để thi công."
+      }
+    ],
+    "serviceArea": "Khu vực phục vụ minh họa: Tư vấn mặt bằng trực tuyến và khảo sát theo phạm vi công bố của studio."
+  },
+  "contact": {
+    "phone": "",
+    "email": "",
+    "address": "",
+    "hours": "",
+    "image": "assets/images/hien-nang-cua-so.jpg",
+    "imageAlt": "Cận cảnh gối tựa vải lanh bên khung cửa sổ ngập nắng",
+    "headline": "Trao đổi với Nếp",
+    "lead": "Bạn có thể gửi nhu cầu và chọn cách để studio liên hệ lại."
+  },
+  "packages": [
+    {
+      "id": "G01",
+      "number": "01",
+      "name": "Tư vấn bố trí mặt bằng",
+      "pricingType": "flat",
+      "unitPrice": 1500000,
+      "minPrice": 0,
+      "unitLabel": "đ/căn",
+      "scopeSummary": "Buổi trực tuyến 60 phút và sơ đồ bố trí 2D có chú thích cho căn hộ đến 70 m².",
+      "deliverables": "Một buổi trực tuyến 60 phút cho căn hộ đến 70 m². Khách gửi mặt bằng có kích thước và ảnh hiện trạng. Sau buổi, nhận 1 sơ đồ bố trí có chú thích và 1 lượt góp ý chỉnh sơ đồ.",
+      "extras": "Đo tại nhà, thêm phương án hoặc căn lớn hơn 70 m² được báo riêng để khách đồng ý trước. Phối cảnh và bản vẽ đóng đồ thuộc gói G02.",
+      "examples": [
+        "Căn 32 m² và 62 m² cùng mức phí trong phạm vi này."
+      ],
+      "featured": false
+    },
+    {
+      "id": "G02",
+      "number": "02",
+      "name": "Thiết kế nội thất",
+      "pricingType": "per_m2",
+      "unitPrice": 250000,
+      "minPrice": 9000000,
+      "unitLabel": "đ/m²",
+      "scopeSummary": "Mặt bằng bố trí, phối cảnh, bảng vật liệu và bản vẽ triển khai đồ nội thất.",
+      "deliverables": "Mặt bằng bố trí, phối cảnh các phòng trong phạm vi, bảng vật liệu và bản vẽ triển khai đồ nội thất đã thống nhất. Gồm 2 vòng chỉnh sửa tổng hợp.",
+      "extras": "Đổi phạm vi sau duyệt, thêm vòng sửa hoặc khảo sát ngoài phạm vi được báo riêng. Khách duyệt phí trước khi làm.",
+      "examples": [
+        "{{G02.example62}}",
+        "{{G02.example32}}"
+      ],
+      "featured": true
+    },
+    {
+      "id": "G03",
+      "number": "03",
+      "name": "Đồng hành thi công",
+      "pricingType": "per_session",
+      "unitPrice": 1200000,
+      "minPrice": 0,
+      "sessionBundle": 2,
+      "unitLabel": "đ/buổi",
+      "scopeSummary": "Đến công trình đối chiếu hạng mục với hồ sơ thiết kế và ghi chú trao đổi nhà thầu.",
+      "deliverables": "Một lần đến công trình (tối đa 2 giờ) trong khu vực studio công bố để đối chiếu 1 hạng mục với hồ sơ thiết kế. Sau buổi nhận ghi chú, ảnh và điểm cần trao đổi với nhà thầu.",
+      "extras": "Thêm buổi tính theo đơn giá; đi xa hoặc kéo dài buổi được báo riêng trước khi đặt. Nhà thầu phụ trách thi công và bảo hành.",
+      "examples": [
+        "Gói 2 buổi trong phạm vi: {{G03.twoSessions}}."
+      ],
+      "featured": false
+    }
+  ],
+  "serviceFaqs": [
+    {
+      "question": "Chi phí thiết kế có bao gồm tiền thi công và vật liệu không?",
+      "answer": "Không. Đơn giá thiết kế tách bạch hoàn toàn với vật liệu và thi công để bạn chủ động lựa chọn đơn vị thực hiện và kiểm soát ngân sách minh bạch."
+    },
+    {
+      "question": "Căn hộ nhỏ dưới {{G02.minAreaBreakEven}} tính phí gói Thiết kế nội thất thế nào?",
+      "answer": "Nhân diện tích thiết kế với {{G02.price}} và đối chiếu mức tối thiểu {{G02.minPrice}}/căn. Ví dụ: {{G02.example32}} (vì {{G02.raw32}}, thấp hơn mức sàn của gói)."
+    },
+    {
+      "question": "Nếu chỉ cải tạo một phần căn hộ thì tính diện tích thế nào?",
+      "answer": "Studio chỉ tính trên phần diện tích thực sự triển khai hồ sơ thiết kế, không cộng dồn phòng tắm, logia hay phòng giữ nguyên hiện trạng (vẫn đối chiếu mức tối thiểu {{G02.minPrice}}/căn với gói Thiết kế nội thất)."
+    },
+    {
+      "question": "Khi nào phát sinh chi phí thêm ngoài đơn giá công bố?",
+      "answer": "Chi phí chỉ phát sinh khi bạn yêu cầu đổi phạm vi sau lúc đã duyệt phương án, thêm vòng chỉnh sửa ngoài gói hoặc khảo sát ngoài khu vực công bố. Mọi khoản đều được báo riêng và chỉ làm khi bạn đồng ý trước."
+    },
+    {
+      "question": "Thuế và chi phí đi lại ngoài khu vực công bố tính ra sao?",
+      "answer": "Chính sách thuế và phụ phí đi xa (nếu áp dụng với gói Đồng hành thi công {{G03.price}} hoặc đo đạc trực tiếp) được studio xác nhận rõ bằng văn bản trước khi bạn chốt đặt lịch."
+    }
+  ],
+  "projects": [
+    {
+      "slug": "hien-nang",
+      "featured": true,
+      "published": true,
+      "name": "Căn hộ Hiên Nắng",
+      "shortName": "Hiên Nắng",
+      "areaM2": 62,
+      "label": "Dự án minh họa",
+      "spaces": "Khách · Bếp · Ăn",
+      "primaryPackageId": "G02",
+      "secondaryPackageId": "G01",
+      "floorplanType": "hien-nang",
+      "floorplanCaption": "Mặt bằng 2D Trước & Sau khi kéo bàn ăn sát băng ghế cửa sổ.",
+      "summary": "Góc đọc bên cửa sổ trở thành chỗ ngồi cho bữa tối.",
+      "heroLead": "Một góc đọc sáng bên cửa sổ mở ra bàn ăn đủ chỗ cho hai người ngày thường và bạn bè cuối tuần.",
+      "images": {
+        "hero": "assets/images/hien-nang-hero.jpg",
+        "heroAlt": "Toàn cảnh phòng sinh hoạt chung căn hộ Hiên Nắng 62 m²",
+        "kitchen": "assets/images/hien-nang-bep-vom.jpg",
+        "kitchenAlt": "Góc bếp gỗ sồi mở và vòm hành lang nhìn vào phòng ngủ",
+        "kitchenCaption": "Góc bếp mở & hành lang vòm giữ tầm nhìn xuyên suốt căn hộ.",
+        "bookshelf": "assets/images/hien-nang-ke-sach.jpg",
+        "bookshelfAlt": "Băng ghế bên cửa sổ và kệ sách gỗ sồi âm tường",
+        "window": "assets/images/hien-nang-cua-so.jpg",
+        "windowAlt": "Cận cảnh gối tựa vải lanh bên khung cửa sổ ngập nắng"
+      },
+      "story": {
+        "headline": "Một góc nhà cho ngày thường và những bữa có khách",
+        "need": "Gia chủ sống hai người trong căn hộ 62 m², muốn giữ không gian đọc sách thoáng sáng bên cửa sổ nhưng không bị chật khi bạn bè ghé ăn tối.",
+        "decision": "Thay vì đặt bàn ăn rời giữa phòng gây vướng lối đi, studio xoay bàn ăn về phía băng ghế dài chạy dọc cửa sổ. Hai chỗ ngồi cố định ngày thường kết hợp với hai ghế rời tạo thành bàn ăn 5–6 người mà vẫn chừa lối đi rộng từ khu bếp.",
+        "ctaPrompt": "Bạn cũng muốn bố trí lại góc ăn và cần bản vẽ để làm đồ?"
+      },
+      "detailHighlight": {
+        "label": "Chi tiết đáng nhìn",
+        "title": "Băng ghế bên cửa sổ",
+        "homeTitle": "Một chỗ ngồi, hai nhịp sống",
+        "homeBody": "Đặt bàn ăn sát băng ghế cửa sổ biến góc đọc sách ban ngày thành một phía của bàn ăn khi có khách, giữ lối đi từ bếp luôn thoáng.",
+        "body": "Đầu băng ghế nối liền kệ sách âm tường gỗ sồi, phần đệm vải lanh xanh ô liu có chiều sâu vừa vặn để tựa lưng đọc sách lẫn ngồi ăn cơm."
+      }
+    },
+    {
+      "slug": "goc-sang",
+      "featured": false,
+      "published": true,
+      "name": "Căn hộ Góc Sáng",
+      "shortName": "Góc Sáng",
+      "areaM2": 32,
+      "label": "Dự án minh họa",
+      "spaces": "Ngủ · Làm việc · Bếp ăn",
+      "primaryPackageId": "G02",
+      "secondaryPackageId": "G01",
+      "floorplanType": "goc-sang",
+      "floorplanCaption": "Mặt bằng 2D căn studio 32 m²: xoay giường vào trong và dựng vách lam lửng nối bàn làm việc đón sáng ngang.",
+      "summary": "Vách lam gỗ lửng tách gọn góc làm việc ban ngày khỏi giường ngủ mà không chặn nắng ban công.",
+      "heroLead": "Sắp xếp lại căn hộ studio 32 m² để làm việc tại nhà đủ sáng, họp trực tuyến gọn gàng và vẫn thoáng gió.",
+      "images": {
+        "hero": "assets/images/hien-nang-ke-sach.jpg",
+        "heroAlt": "Góc kệ sách gỗ sồi và khung cửa sổ sáng trong căn hộ Góc Sáng 32 m²",
+        "kitchen": "assets/images/hien-nang-binh-hoa.jpg",
+        "kitchenAlt": "Mặt bàn gỗ sáng cạnh nguồn sáng tự nhiên của căn hộ Góc Sáng",
+        "kitchenCaption": "Khoảng bàn gỗ đón sáng ngang giúp làm việc lâu không bị chói màn hình.",
+        "bookshelf": "assets/images/hien-nang-cua-so.jpg",
+        "bookshelfAlt": "Góc tựa lưng thư giãn với đệm vải lanh bên cửa sổ nắng",
+        "window": "assets/images/hien-nang-cua-so.jpg",
+        "windowAlt": "Ánh nắng chiều dịu trải trên đệm ngồi vải lanh"
+      },
+      "story": {
+        "headline": "Căn studio 32 m² đủ chỗ làm việc, ăn tối và ngủ yên",
+        "need": "Gia chủ sống một mình và làm việc tại nhà ba buổi mỗi tuần trong căn hộ 32 m². Trước khi bố trí lại, bàn làm việc quay lưng ra cửa sổ gây chói màn hình, còn giường ngủ lộ thẳng vào khung hình mỗi khi gọi họp trực tuyến.",
+        "decision": "Studio xoay đầu giường vào khoảng tường yên tĩnh phía trong, dựng một hệ vách lam gỗ lửng cao 1,4 m kết hợp kệ sách hai mặt và bàn làm việc dài 1,35 m hướng vuông góc với cửa sổ. Nhờ bỏ vách ngăn kín từ sàn tới trần, toàn bộ khoảng sàn giữa nhà được giữ thoáng cho chiếc bàn ăn nhỏ hai người và lối ra ban công.",
+        "ctaPrompt": "Căn hộ nhỏ của bạn cũng cần chia lại góc làm việc và nghỉ ngơi?"
+      },
+      "detailHighlight": {
+        "label": "Chi tiết đáng nhìn",
+        "title": "Vách lam gỗ lửng nối bàn làm việc",
+        "homeTitle": "Tách nhịp làm việc khỏi giấc ngủ",
+        "homeBody": "Hệ vách gỗ cao ngang tầm mắt khi ngồi che gọn khu giường phía sau lúc họp trực tuyến nhưng giữ trọn luồng gió và ánh sáng từ ban công.",
+        "body": "Chiều cao vách dừng ở mức 1,4 m để tạo phông nền gọn gàng khi ngồi làm việc, phía trên hoàn toàn mở thoáng để điều hòa và ánh nắng tự nhiên lưu thông khắp căn studio 32 m². Hai ngăn dưới chân vách tận dụng làm hộc đựng tài liệu và dây sạc."
+      }
+    },
+    {
+      "slug": "bep-lanh",
+      "featured": false,
+      "published": true,
+      "name": "Căn hộ Bếp Lành",
+      "shortName": "Bếp Lành",
+      "areaM2": 48,
+      "label": "Dự án minh họa",
+      "spaces": "Bếp · Ăn · Hành lang",
+      "primaryPackageId": "G01",
+      "secondaryPackageId": "G02",
+      "floorplanType": "bep-lanh",
+      "floorplanCaption": "Mặt bằng 2D căn 48 m²: giữ nguyên tủ bếp hiện trạng, thêm kệ đảo mảnh 45 cm và mở thẳng trục sáng qua vòm cửa.",
+      "summary": "Giữ nguyên hệ bếp hiện trạng, thêm kệ đảo mảnh và xoay bàn ăn để mở thẳng trục sáng vào phòng ngủ.",
+      "heroLead": "Giải bài toán thiếu mặt sơ chế và lối đi vướng ở căn 1PN+ 48 m² mà không cần đập phá hệ tủ bếp cũ.",
+      "images": {
+        "hero": "assets/images/hien-nang-bep-vom.jpg",
+        "heroAlt": "Góc bếp gỗ sồi phẳng và vòm hành lang mở sáng trong căn hộ Bếp Lành 48 m²",
+        "kitchen": "assets/images/hien-nang-binh-hoa.jpg",
+        "kitchenAlt": "Bàn ăn gỗ sồi đặt song song trục hành lang đón sáng tự nhiên",
+        "kitchenCaption": "Bàn ăn gỗ mảnh kê gọn dọc trục ánh sáng giúp lối từ bếp vào phòng ngủ luôn rộng 90 cm.",
+        "bookshelf": "assets/images/hien-nang-hero.jpg",
+        "bookshelfAlt": "Không gian liên thông giữa khu ăn, cửa sổ sáng và hệ tủ bếp",
+        "window": "assets/images/hien-nang-cua-so.jpg",
+        "windowAlt": "Ánh sáng tự nhiên xuyên từ cửa sổ vào sâu khu vực bếp"
+      },
+      "story": {
+        "headline": "Sắp lại khu bếp 48 m² mà không phải đập bỏ hệ tủ cũ",
+        "need": "Vợ chồng trẻ nhận lại căn hộ 48 m² có sẵn hệ tủ bếp gỗ còn rất chắc chắn nhưng thiếu chỗ để nồi cơm điện và bàn sơ chế. Chiếc bàn ăn kê chắn ngang lối rẽ khiến mỗi lần nấu ăn đều phải đi vòng và hành lang vào phòng ngủ bị tối.",
+        "decision": "Thông qua buổi tư vấn bố trí mặt bằng 2D, studio giữ nguyên toàn bộ đường điện nước và hệ tủ bếp dưới hiện trạng để tiết kiệm chi phí, chỉ bổ sung một kệ đảo phụ sâu 45 cm có bánh xe khóa cùng chiếc bàn ăn gỗ mảnh xoay dọc theo tường. Lối di chuyển từ bếp sang bàn ăn và qua vòm cửa vào phòng ngủ được mở thẳng một mạch.",
+        "ctaPrompt": "Bạn muốn giữ lại đồ cũ và thử phương án mặt bằng trước khi mua sắm?"
+      },
+      "detailHighlight": {
+        "label": "Chi tiết đáng nhìn",
+        "title": "Kệ đảo mảnh 45 cm & trục sáng qua vòm cửa",
+        "homeTitle": "Tối ưu công năng không cần đập phá",
+        "homeBody": "Kệ đảo di động giải quyết ngay phần mặt sơ chế thiếu hụt trong khi vẫn giữ trọn hệ tủ bếp cũ và lối đi rộng 90 cm.",
+        "body": "Kệ đảo gỗ sâu đúng 45 cm vừa đủ đặt nồi cơm điện, ấm đun và rổ rau khi nấu, bên dưới là hai tầng mở cất rổ rá khô thoáng. Khi cuối tuần có thêm khách, chỉ cần mở khóa bánh xe và đẩy nhẹ kệ áp sát bàn ăn để thành quầy bày món phụ."
+      }
+    }
+  ],
+  "blog": {
+    "title": "Chuyện bố trí nhà",
+    "posts": [
+      {
+        "slug": "truoc-khi-mua-ban-an-hay-thu-keo-ghe",
+        "published": true,
+        "eyebrow": "Ghi chép bố trí",
+        "title": "Trước khi mua bàn ăn, hãy thử kéo ghế",
+        "excerpt": "Một chiếc bàn có thể vừa với khoảng sàn trống mà vẫn vướng lúc dùng. Chính động tác kéo ghế ra mới cho thấy phần sàn bạn cần chừa.",
+        "lead": "Một chiếc bàn có thể vừa với khoảng sàn trống mà vẫn vướng lúc dùng. Điều đáng thử là chuyện xảy ra đúng giờ cơm: một người đang ngồi, người kia bê tô canh từ bếp ra, rồi cả hai cùng đứng dậy.",
+        "sections": [
+          {
+            "heading": "Đánh dấu mặt bàn trên sàn.",
+            "body": "Dùng băng giấy đánh dấu bốn góc theo kích thước bàn bạn đang cân nhắc. Lấy một chiếc ghế đang dùng, đặt vào đúng phía bạn định ngồi rồi kéo ra như khi rời bàn. Giữ ghế ở đó và đi thử từ bếp qua. Chính động tác kéo ghế mới cho thấy phần sàn bạn cần chừa."
+          },
+          {
+            "heading": "Thử một bữa thường và một bữa có khách.",
+            "body": "Đặt hai bát lên bàn cho bữa thường. Sau đó nghĩ đến người thứ ba, thứ tư: họ lấy ghế từ đâu, ai cần đứng lên để nhường đường? Trong phương án Hiên Nắng, băng ghế ở sẵn bên cửa sổ. Khi kê bàn về phía ấy, một chỗ đọc sách có thể trở thành một phía của bàn ăn."
+          },
+          {
+            "heading": "Chụp lại chỗ bị vướng.",
+            "body": "Một tấm ảnh khi ghế đang kéo ra và một sơ đồ có kích thước hữu ích hơn ảnh căn phòng đã dọn gọn. Ghi thêm món đồ bạn muốn giữ. Khi trao đổi về mặt bằng, hai bên có thể bắt đầu từ đúng góc thường bất tiện nhất."
+          }
+        ],
+        "relatedProjectSlug": "hien-nang",
+        "relatedPackageId": "G01"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Căn nhỏ tính phí thiết kế thế nào?",
+        "paragraphs": [
+          "Với gói Thiết kế nội thất, chi phí được tính bằng diện tích thực tế cần thiết kế nhân với đơn giá {{G02.price}}, sau đó đối chiếu với mức phí tối thiểu {{G02.minPrice}}/căn. Ví dụ với căn hộ studio 32 m² (như dự án Góc Sáng), phép nhân theo diện tích là {{G02.raw32}}, thấp hơn mức sàn nên áp dụng mức tối thiểu {{G02.minPrice}}. Từ {{G02.minAreaBreakEven}} trở lên, chi phí sẽ nhân đúng theo diện tích thực tế.",
+          "Lý do có mức phí tối thiểu là vì căn nhỏ 28–35 m² thực tế đòi hỏi thời gian tính toán kỹ không kém căn lớn: từng centimet đều phải giải đồng thời bài toán lưu trữ, lối đi, ánh sáng và đồ đa năng. Hồ sơ bàn giao vẫn giữ nguyên đầy đủ mặt bằng 2D, phối cảnh 3D, bảng vật liệu, bản vẽ triển khai đóng đồ và 2 vòng chỉnh sửa tổng hợp để thợ thi công làm chính xác.",
+          "Một điểm giúp gia chủ căn nhỏ tối ưu chi phí là studio chỉ tính trên phần diện tích thực sự triển khai thiết kế: nếu bạn giữ nguyên phòng tắm, logia hoặc một phòng hiện trạng không sửa, phần đó không bị cộng dồn (nhưng vẫn đối chiếu mức tối thiểu {{G02.minPrice}} khi chọn gói Thiết kế nội thất).",
+          "Nếu căn hộ của bạn dưới 70 m², đồ đạc cơ bản vẫn dùng tốt và bạn chỉ cần sắp xếp lại vị trí bàn ăn, giường ngủ, góc làm việc cho thoáng gọn mà chưa cần phối cảnh 3D hay bản vẽ đóng đồ mới, bạn có thể bắt đầu bằng gói Tư vấn bố trí mặt bằng ({{G01.price}} — căn 32 m² hay 62 m² đều chung một mức phí trọn gói). Phí thiết kế chưa bao gồm vật liệu và thi công; mọi phát sinh ngoài phạm vi đều được báo trước để bạn duyệt."
+        ],
+        "answer": "Nhân diện tích thiết kế với {{G02.price}} và đối chiếu mức tối thiểu {{G02.minPrice}}/căn ({{G02.example32}}).",
+        "defaultOpen": true,
+        "linkLabel": "Xem dịch vụ và bảng giá",
+        "linkHref": "dich-vu.html?goi=G02#G02"
+      },
+      {
+        "question": "Chưa có bản vẽ căn hộ thì bắt đầu thế nào?",
+        "answer": "Hãy chụp các góc phòng và ghi lại kích thước bạn đo được. Gói tư vấn trong bản mẫu cần mặt bằng có kích thước để vẽ phương án. Studio sẽ cho biết phần nào cần đo bổ sung.",
+        "defaultOpen": false,
+        "linkLabel": "",
+        "linkHref": ""
+      },
+      {
+        "question": "Có thể giữ lại bàn hoặc tủ cũ không?",
+        "answer": "Có thể lấy món đồ đó làm điểm xuất phát. Hãy gửi ảnh cùng chiều dài, rộng và cao để thử vị trí trên mặt bằng.",
+        "defaultOpen": false,
+        "linkLabel": "",
+        "linkHref": ""
+      },
+      {
+        "question": "Chỉ muốn sắp lại bàn ghế thì chọn gói nào?",
+        "answer": "Chọn Tư vấn bố trí mặt bằng ({{G01.price}}) để nhận sơ đồ có chú thích. Nếu cần phối cảnh, vật liệu và bản vẽ đóng đồ, xem gói Thiết kế nội thất.",
+        "defaultOpen": false,
+        "linkLabel": "Xem dịch vụ và bảng giá",
+        "linkHref": "dich-vu.html?goi=G01#G01"
+      },
+      {
+        "question": "Đặt lịch có đồng nghĩa studio sẽ đến công trình không?",
+        "answer": "Sau khi gửi yêu cầu, studio liên hệ để thống nhất thời gian và phạm vi. Nếu muốn đối chiếu hạng mục đang thi công với hồ sơ, chọn Đồng hành thi công ({{G03.price}}).",
+        "defaultOpen": false,
+        "linkLabel": "Đặt lịch",
+        "linkHref": "dat-lich.html?goi=G03"
+      }
+    ]
+  },
+  "booking": {
+    "submission": {
+      "mode": "demo",
+      "endpoint": "",
+      "accessKey": ""
+    },
+    "messages": {
+      "missingPackage": "Bạn chọn một gói dịch vụ nhé.",
+      "missingName": "Bạn nhập tên để studio tiện xưng hô nhé.",
+      "missingContact": "Bạn nhập số điện thoại hoặc email để studio phản hồi nhé.",
+      "invalidPackage": "Gói này đã thay đổi. Bạn chọn lại một gói nhé.",
+      "sending": "Đang gửi yêu cầu…",
+      "error": "Yêu cầu chưa gửi được. Thông tin vẫn còn ở đây, bạn có thể thử lại.",
+      "privacyNote": "Studio sẽ dùng thông tin bạn gửi để trao đổi về yêu cầu này.",
+      "noConfirmNote": "Gửi yêu cầu chưa phải xác nhận lịch hẹn."
+    }
+  }
+}

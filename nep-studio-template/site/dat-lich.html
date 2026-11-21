@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đặt lịch tư vấn · Nếp Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+  <div id="site-header-mount"></div>
+  <main id="main-content"></main>
+  <div id="site-footer-mount"></div>
+  <script type="module">
+    import { loadSiteData, renderFileProtocolNotice } from './js/data-loader.js';
+    import { renderShell } from './js/shell.js';
+    import { renderBooking } from './js/booking.js';
+
+    const main = document.getElementById('main-content');
+    loadSiteData()
+      .then((data) => {
+        renderShell(data, 'dat-lich');
+        renderBooking(data, main);
+      })
+      .catch(() => renderFileProtocolNotice(main));
+  </script>
+</body>
+</html>
