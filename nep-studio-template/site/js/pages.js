@@ -13,6 +13,141 @@ import {
 } from './data-loader.js';
 import { getProjectFloorplanSvg, SVG_WORKDESK, SVG_CHAIR_PULL } from './drawings.js';
 
+function observeReveal(el) {
+  if (!el) return;
+  const prefersReduced = Boolean(
+    window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+
+  if (!prefersReduced && 'IntersectionObserver' in window) {
+    el.classList.add('has-motion');
+    let revealed = false;
+    let observer = null;
+
+    const reveal = () => {
+      if (revealed) return;
+      revealed = true;
+      el.classList.add('is-visible');
+      if (observer) observer.disconnect();
+      window.removeEventListener('scroll', checkInView);
+    };
+
+    const checkInView = () => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight + 40 && rect.bottom > -40) {
+        reveal();
+      }
+    };
+
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) reveal();
+      });
+    }, { threshold: 0.01, rootMargin: '0px 0px 40px 0px' });
+    observer.observe(el);
+
+    window.addEventListener('scroll', checkInView, { passive: true });
+    requestAnimationFrame(() => requestAnimationFrame(checkInView));
+  } else {
+    el.classList.add('is-visible');
+  }
+}
+
+function renderAnimatedFaqSection({ id, title, subtitlePrefix, items, data, idPrefix = 'cost-faq' }) {
+  const contactEmail = (data.contact?.email || '').trim();
+  const faqContactLink = contactEmail
+    ? `<a href="mailto:${escapeHtml(contactEmail)}" class="cost-faq-contact-link">${escapeHtml(contactEmail)}</a>`
+    : `<a href="lien-he.html" class="cost-faq-contact-link">trao đổi trực tiếp với ${escapeHtml(data.brand?.name || 'Nếp Studio')}</a>`;
+
+  const titleWordsHtml = String(title || '')
+    .split(' ')
+    .map((word, i) => `<span class="cost-faq-word" style="--word-delay:${i * 75}ms">${escapeHtml(word)}</span>`)
+    .join(' ');
+
+  const plusSvg = `
+    <svg class="cost-faq-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <line x1="5" y1="12" x2="19" y2="12"/>
+    </svg>
+  `;
+
+  let openedAlready = false;
+  const faqsHtml = (items || []).map((faq, idx) => {
+    const panelId = `${idPrefix}-panel-${idx}`;
+    const btnId = `${idPrefix}-btn-${idx}`;
+    const isDefaultOpen = Boolean(faq.defaultOpen) && !openedAlready;
+    if (isDefaultOpen) openedAlready = true;
+
+    const paragraphs = Array.isArray(faq.paragraphs) && faq.paragraphs.length > 0
+      ? faq.paragraphs
+      : [faq.answer || ''];
+    const bodyHtml = paragraphs
+      .map((para) => `<p>${escapeHtml(interpolatePriceTokens(para, data))}</p>`)
+      .join('');
+    const linkHtml = faq.linkLabel && faq.linkHref
+      ? `<p class="cost-faq-box-link"><a href="${escapeHtml(faq.linkHref)}" class="text-link" style="min-height:auto;">${escapeHtml(faq.linkLabel)}</a></p>`
+      : '';
+
+    return `
+      <div class="cost-faq-item ${isDefaultOpen ? 'is-open' : ''}" style="--item-delay:${180 + idx * 65}ms" data-cost-faq-item>
+        <button type="button" class="cost-faq-trigger" id="${btnId}" aria-expanded="${isDefaultOpen ? 'true' : 'false'}" aria-controls="${panelId}" data-cost-faq-trigger>
+          <span class="cost-faq-trigger-text">${escapeHtml(interpolatePriceTokens(faq.question, data))}</span>
+          ${plusSvg}
+        </button>
+        <div class="cost-faq-panel" id="${panelId}" role="region" aria-labelledby="${btnId}" aria-hidden="${isDefaultOpen ? 'false' : 'true'}">
+          <div class="cost-faq-panel-inner">
+            <div class="cost-faq-box">
+              ${bodyHtml}
+              ${linkHtml}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="section-rule" id="${escapeHtml(id)}">
+      <div class="cost-faq-wrap" data-cost-faq-wrap>
+        <div class="cost-faq-header">
+          <h2 class="cost-faq-title">${titleWordsHtml}</h2>
+          <p class="cost-faq-sub">${escapeHtml(subtitlePrefix)} ${faqContactLink}.</p>
+        </div>
+        <div class="cost-faq-list">
+          ${faqsHtml}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function wireAnimatedFaqSection(faqWrap) {
+  if (!faqWrap) return;
+  observeReveal(faqWrap);
+
+  const faqItems = Array.from(faqWrap.querySelectorAll('[data-cost-faq-item]'));
+  faqItems.forEach((item) => {
+    const trigger = item.querySelector('[data-cost-faq-trigger]');
+    const panel = item.querySelector('.cost-faq-panel');
+    if (!trigger || !panel) return;
+    trigger.addEventListener('click', () => {
+      const willOpen = !item.classList.contains('is-open');
+      faqItems.forEach((other) => {
+        other.classList.remove('is-open');
+        const t = other.querySelector('[data-cost-faq-trigger]');
+        const p = other.querySelector('.cost-faq-panel');
+        if (t) t.setAttribute('aria-expanded', 'false');
+        if (p) p.setAttribute('aria-hidden', 'true');
+      });
+      if (willOpen) {
+        item.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+        panel.setAttribute('aria-hidden', 'false');
+      }
+    });
+  });
+}
+
 function renderProcessSteps(steps, large = false) {
   return (steps || []).map((step) => `
     <div class="${large ? 'step-row-lg' : 'step-row'}">
@@ -27,13 +162,31 @@ function renderProcessSteps(steps, large = false) {
 export function renderHome(data, mount) {
   const featured = getFeaturedProject(data);
   const brand = data.brand || {};
+  const hero = brand.hero || {};
   const packages = data.packages || [];
 
-  const heroSection = featured ? `
-    <div class="grid-hero">
+  const studioHeroSection = `
+    <section class="studio-hero" data-studio-hero aria-label="Giới thiệu studio">
+      <div class="studio-hero-copy">
+        <p class="studio-hero-side">${escapeHtml(hero.sideNote || 'Bố trí mặt bằng, thiết kế nội thất và hồ sơ thi công cho căn hộ sống gọn')}</p>
+        <div class="studio-hero-main">
+          <h1 class="studio-hero-headline">${escapeHtml(hero.headline || brand.aboutTitle || 'Một studio nội thất cho những gia chủ muốn căn nhà thật có nếp.')}</h1>
+          <p class="studio-hero-desc">${escapeHtml(hero.description || brand.aboutLead || brand.tagline || '')}</p>
+        </div>
+      </div>
+      <div class="studio-hero-stage">
+        <img src="${escapeHtml(hero.image || 'assets/images/hero-landscape.jpg')}" alt="${escapeHtml(hero.imageAlt || brand.name || 'Nếp Studio')}" class="studio-hero-artwork" data-hero-parallax />
+        <div class="studio-hero-mist-top" aria-hidden="true"></div>
+        <div class="studio-hero-mist-bottom" aria-hidden="true"></div>
+      </div>
+    </section>
+  `;
+
+  const featuredSection = featured ? `
+    <div class="grid-hero" id="du-an-minh-hoa">
       <div>
         <span class="eyebrow tabular">${escapeHtml(featured.label || 'Dự án tiêu biểu')} · ${escapeHtml(featured.areaM2)} m²</span>
-        <h1>${escapeHtml(featured.name)}</h1>
+        <h2 class="home-featured-heading">${escapeHtml(featured.name)}</h2>
         <p class="muted">${escapeHtml(featured.heroLead || featured.summary)}</p>
         <div class="actions-row">
           <a href="du-an.html?slug=${encodeURIComponent(featured.slug)}" class="btn-primary">Xem căn hộ</a>
@@ -47,7 +200,7 @@ export function renderHome(data, mount) {
   ` : `
     <div class="prose">
       <span class="eyebrow">${escapeHtml(brand.name)}</span>
-      <h1>${escapeHtml(brand.aboutTitle || brand.name)}</h1>
+      <h2 class="home-featured-heading">${escapeHtml(brand.aboutTitle || brand.name)}</h2>
       <p class="muted">${escapeHtml(brand.tagline || '')}</p>
       <div class="actions-row">
         <a href="dich-vu.html" class="btn-primary">Xem dịch vụ và bảng giá</a>
@@ -85,8 +238,9 @@ export function renderHome(data, mount) {
   `).join('');
 
   mount.innerHTML = `
+    ${studioHeroSection}
     <section class="container">
-      ${heroSection}
+      ${featuredSection}
       ${detailSection}
       <div class="section-rule">
         <span class="eyebrow">Dịch vụ của ${escapeHtml(brand.name || 'Nếp Studio')}</span>
@@ -116,6 +270,35 @@ export function renderHome(data, mount) {
       </div>
     </section>
   `;
+
+  // Wire calm hero entrance + gentle scroll parallax
+  const heroEl = mount.querySelector('[data-studio-hero]');
+  observeReveal(heroEl);
+
+  const parallaxImg = mount.querySelector('[data-hero-parallax]');
+  const prefersReduced = Boolean(
+    window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+  if (parallaxImg && !prefersReduced) {
+    let ticking = false;
+    const updateParallax = () => {
+      ticking = false;
+      const stage = parallaxImg.parentElement;
+      if (!stage) return;
+      const rect = stage.getBoundingClientRect();
+      if (rect.bottom < -100 || rect.top > window.innerHeight + 100) return;
+      const progress = Math.max(-1, Math.min(1, (window.innerHeight * 0.5 - rect.top) / (window.innerHeight + rect.height)));
+      const shiftY = progress * 34;
+      parallaxImg.style.transform = `translate3d(0, ${shiftY.toFixed(1)}px, 0)`;
+    };
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(updateParallax);
+      }
+    }, { passive: true });
+    updateParallax();
+  }
 }
 
 export function renderAbout(data, mount) {
@@ -389,42 +572,14 @@ export function renderServices(data, mount) {
     `;
   }).join('');
 
-  const contactEmail = (data.contact?.email || '').trim();
-  const faqContactLink = contactEmail
-    ? `<a href="mailto:${escapeHtml(contactEmail)}" class="cost-faq-contact-link">${escapeHtml(contactEmail)}</a>`
-    : `<a href="lien-he.html" class="cost-faq-contact-link">trao đổi trực tiếp với ${escapeHtml(data.brand?.name || 'Nếp Studio')}</a>`;
-
-  const titleWordsHtml = 'Hỏi nhanh về chi phí'
-    .split(' ')
-    .map((word, i) => `<span class="cost-faq-word" style="--word-delay:${i * 75}ms">${escapeHtml(word)}</span>`)
-    .join(' ');
-
-  const plusSvg = `
-    <svg class="cost-faq-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true">
-      <line x1="12" y1="5" x2="12" y2="19"/>
-      <line x1="5" y1="12" x2="19" y2="12"/>
-    </svg>
-  `;
-
-  const faqsHtml = (data.serviceFaqs || []).map((faq, idx) => {
-    const panelId = `cost-faq-panel-${idx}`;
-    const btnId = `cost-faq-btn-${idx}`;
-    return `
-      <div class="cost-faq-item" style="--item-delay:${180 + idx * 65}ms" data-cost-faq-item>
-        <button type="button" class="cost-faq-trigger" id="${btnId}" aria-expanded="false" aria-controls="${panelId}" data-cost-faq-trigger>
-          <span class="cost-faq-trigger-text">${escapeHtml(interpolatePriceTokens(faq.question, data))}</span>
-          ${plusSvg}
-        </button>
-        <div class="cost-faq-panel" id="${panelId}" role="region" aria-labelledby="${btnId}" aria-hidden="true">
-          <div class="cost-faq-panel-inner">
-            <div class="cost-faq-box">
-              <p>${escapeHtml(interpolatePriceTokens(faq.answer, data))}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
+  const costFaqHtml = renderAnimatedFaqSection({
+    id: 'hoi-nhanh-chi-phi',
+    title: 'Hỏi nhanh về chi phí',
+    subtitlePrefix: 'Giải đáp những câu hỏi thường gặp trước khi chọn gói. Nếu bạn cần hỏi riêng cho căn hộ của mình, hãy',
+    items: data.serviceFaqs || [],
+    data,
+    idPrefix: 'cost-faq'
+  });
 
   mount.innerHTML = `
     <section class="container">
@@ -434,83 +589,11 @@ export function renderServices(data, mount) {
 
       ${rowsHtml}
 
-      <div class="section-rule" id="hoi-nhanh-chi-phi">
-        <div class="cost-faq-wrap" data-cost-faq-wrap>
-          <div class="cost-faq-header">
-            <h2 class="cost-faq-title">${titleWordsHtml}</h2>
-            <p class="cost-faq-sub">Giải đáp những câu hỏi thường gặp trước khi chọn gói. Nếu bạn cần hỏi riêng cho căn hộ của mình, hãy ${faqContactLink}.</p>
-          </div>
-          <div class="cost-faq-list">
-            ${faqsHtml}
-          </div>
-        </div>
-      </div>
+      ${costFaqHtml}
     </section>
   `;
 
-  // Wire ScrollX-inspired word blur-in + staggered entrance on scroll (progressive enhancement)
-  const faqWrap = mount.querySelector('[data-cost-faq-wrap]');
-  if (faqWrap) {
-    const prefersReduced = Boolean(
-      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    );
-
-    if (!prefersReduced && 'IntersectionObserver' in window) {
-      faqWrap.classList.add('has-motion');
-      let revealed = false;
-      let observer = null;
-
-      const revealFaq = () => {
-        if (revealed) return;
-        revealed = true;
-        faqWrap.classList.add('is-visible');
-        if (observer) observer.disconnect();
-        window.removeEventListener('scroll', checkInView);
-      };
-
-      const checkInView = () => {
-        const rect = faqWrap.getBoundingClientRect();
-        if (rect.top < window.innerHeight + 40 && rect.bottom > -40) {
-          revealFaq();
-        }
-      };
-
-      observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) revealFaq();
-        });
-      }, { threshold: 0.01, rootMargin: '0px 0px 40px 0px' });
-      observer.observe(faqWrap);
-
-      window.addEventListener('scroll', checkInView, { passive: true });
-      requestAnimationFrame(() => requestAnimationFrame(checkInView));
-    } else {
-      faqWrap.classList.add('is-visible');
-    }
-
-    // Exclusive single-open accordion with smooth height + 45deg plus-to-cross rotation
-    const faqItems = Array.from(faqWrap.querySelectorAll('[data-cost-faq-item]'));
-    faqItems.forEach((item) => {
-      const trigger = item.querySelector('[data-cost-faq-trigger]');
-      const panel = item.querySelector('.cost-faq-panel');
-      if (!trigger || !panel) return;
-      trigger.addEventListener('click', () => {
-        const willOpen = !item.classList.contains('is-open');
-        faqItems.forEach((other) => {
-          other.classList.remove('is-open');
-          const t = other.querySelector('[data-cost-faq-trigger]');
-          const p = other.querySelector('.cost-faq-panel');
-          if (t) t.setAttribute('aria-expanded', 'false');
-          if (p) p.setAttribute('aria-hidden', 'true');
-        });
-        if (willOpen) {
-          item.classList.add('is-open');
-          trigger.setAttribute('aria-expanded', 'true');
-          panel.setAttribute('aria-hidden', 'false');
-        }
-      });
-    });
-  }
+  wireAnimatedFaqSection(mount.querySelector('[data-cost-faq-wrap]'));
 
   if (highlightPkg) {
     const targetRow = mount.querySelector(`[data-pkg-row="${CSS.escape(highlightPkg)}"]`);
@@ -563,6 +646,35 @@ export function renderContact(data, mount) {
     `);
   }
 
+  const partners = contact.partners || null;
+  let partnersHtml = '';
+  if (partners && Array.isArray(partners.rows) && partners.rows.length > 0) {
+    let logoIndex = 0;
+    const rowsMarkup = partners.rows.map((row) => {
+      const itemsMarkup = (row || []).map((item) => {
+        const delay = 140 + logoIndex * 85;
+        logoIndex += 1;
+        const styleClass = `partner-style-${escapeHtml(item.style || 'sans-medium')}`;
+        return `<span class="partner-wordmark ${styleClass}" style="--logo-delay:${delay}ms">${escapeHtml(item.name)}</span>`;
+      }).join('');
+      return `<div class="partner-cloud-row">${itemsMarkup}</div>`;
+    }).join('');
+
+    partnersHtml = `
+      <div class="section-rule" id="doi-tac-dong-hanh">
+        <div class="partner-cloud" data-partner-cloud>
+          <div class="partner-cloud-header">
+            <p class="partner-cloud-eyebrow">${escapeHtml(partners.eyebrow || 'ĐỐI TÁC VẬT LIỆU & XƯỞNG ĐỒNG HÀNH')}</p>
+            <p class="partner-cloud-sub">${escapeHtml(partners.subtitle || '')}</p>
+          </div>
+          <div class="partner-cloud-rows">
+            ${rowsMarkup}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   mount.innerHTML = `
     <section class="container">
       <div class="contact-grid">
@@ -580,8 +692,11 @@ export function renderContact(data, mount) {
           <img src="${escapeHtml(contact.image || 'assets/images/hien-nang-cua-so.jpg')}" alt="${escapeHtml(contact.imageAlt || 'Góc cửa sổ')}" class="photo" />
         </div>
       </div>
+      ${partnersHtml}
     </section>
   `;
+
+  observeReveal(mount.querySelector('[data-partner-cloud]'));
 }
 
 export function renderBlog(data, mount) {
@@ -607,40 +722,25 @@ export function renderBlog(data, mount) {
     </div>
   `).join('');
 
-  const faqsHtml = faqs.map((faq) => {
-    const paragraphs = Array.isArray(faq.paragraphs) && faq.paragraphs.length > 0
-      ? faq.paragraphs
-      : [faq.answer || ''];
-    const bodyHtml = paragraphs
-      .map((para) => `<p>${escapeHtml(interpolatePriceTokens(para, data))}</p>`)
-      .join('');
-    const linkHtml = faq.linkLabel && faq.linkHref
-      ? `<p style="margin-top:12px;margin-bottom:0;"><a href="${escapeHtml(faq.linkHref)}" class="text-link" style="min-height:auto;">${escapeHtml(faq.linkLabel)}</a></p>`
-      : '';
-    return `
-      <details class="faq-item" ${faq.defaultOpen ? 'open' : ''}>
-        <summary><span>${escapeHtml(interpolatePriceTokens(faq.question, data))}</span></summary>
-        <div class="faq-body">
-          ${bodyHtml}
-          ${linkHtml}
-        </div>
-      </details>
-    `;
-  }).join('');
+  const hoiNepFaqHtml = renderAnimatedFaqSection({
+    id: 'hoi-nep',
+    title: 'Hỏi Nếp',
+    subtitlePrefix: 'Giải đáp những thắc mắc thường gặp trước khi bắt đầu thiết kế. Nếu bạn cần hỏi riêng cho căn hộ của mình, hãy',
+    items: faqs,
+    data,
+    idPrefix: 'hoi-nep-faq'
+  });
 
   mount.innerHTML = `
     <section class="container">
       <span class="eyebrow">Blog</span>
       <h1>${escapeHtml(blog.title || 'Chuyện bố trí nhà')}</h1>
       ${postsHtml}
-      <div class="section-rule" id="hoi-nep">
-        <h2>Hỏi Nếp</h2>
-        <div style="margin-top:20px;">
-          ${faqsHtml}
-        </div>
-      </div>
+      ${hoiNepFaqHtml}
     </section>
   `;
+
+  wireAnimatedFaqSection(mount.querySelector('[data-cost-faq-wrap]'));
 }
 
 export function renderPost(data, mount) {

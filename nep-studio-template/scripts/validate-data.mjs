@@ -61,6 +61,7 @@ function checkImagePath(relPath, label) {
 }
 
 checkImagePath(data.brand?.logoImage, 'brand.logoImage');
+checkImagePath(data.brand?.hero?.image, 'brand.hero.image');
 checkImagePath(data.brand?.aboutImage, 'brand.aboutImage');
 checkImagePath(data.contact?.image, 'contact.image');
 

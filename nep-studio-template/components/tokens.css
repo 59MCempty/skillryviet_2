@@ -1,0 +1,26 @@
+/* ==========================================================================
+   Nếp Studio — Standalone UI Component Tokens
+   Override any --cmp-* variable in your host project to re-theme all 4 components.
+   ========================================================================== */
+
+:root {
+  --cmp-bg: #F3F0E8;
+  --cmp-bg-rgb: 243, 240, 232;
+  --cmp-surface: #EAE6DC;
+  --cmp-glass: rgba(250, 249, 245, 0.9);
+  --cmp-glass-strong: rgba(250, 249, 245, 0.97);
+  --cmp-ink: #1A1B18;
+  --cmp-ink-rgb: 26, 27, 24;
+  --cmp-muted: #5C5E58;
+  --cmp-accent: #3E4A36;
+  --cmp-accent-rgb: 62, 74, 54;
+  --cmp-border: #D6D1C6;
+  --cmp-border-rgb: 214, 209, 198;
+
+  --cmp-font-display: 'Newsreader', Georgia, serif;
+  --cmp-font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+
+  --cmp-motion-fast: 180ms ease;
+  --cmp-ease-spring: cubic-bezier(0.22, 1.12, 0.36, 1);
+  --cmp-ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}

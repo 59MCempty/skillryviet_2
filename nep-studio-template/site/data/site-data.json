@@ -10,6 +10,13 @@
     "logoImage": "",
     "logoAlt": "Nếp Studio",
     "tagline": "Thiết kế không gian sống xoay quanh nhịp sống thường ngày.",
+    "hero": {
+      "sideNote": "Bố trí mặt bằng, thiết kế nội thất và hồ sơ thi công cho căn hộ sống gọn",
+      "headline": "Một studio nội thất cho những gia chủ muốn căn nhà thật có nếp.",
+      "description": "Chúng tôi giúp bạn chuyển hóa thói quen sinh hoạt hằng ngày thành mặt bằng thoáng gọn, bảng vật liệu bền bỉ và hồ sơ triển khai rõ ràng. Tư vấn bố trí, thiết kế và đồng hành thi công trong một quy trình minh bạch.",
+      "image": "assets/images/hero-landscape.jpg",
+      "imageAlt": "Tranh màu nước phong cảnh mặt hồ và triền đồi êm dịu mở đầu trang chủ Nếp Studio"
+    },
     "footerQuickLinks": [
       { "label": "Về Nếp", "href": "gioi-thieu.html" },
       { "label": "Bộ sưu tập", "href": "bo-suu-tap.html" },
@@ -46,7 +53,33 @@
     "image": "assets/images/hien-nang-cua-so.jpg",
     "imageAlt": "Cận cảnh gối tựa vải lanh bên khung cửa sổ ngập nắng",
     "headline": "Trao đổi với Nếp",
-    "lead": "Bạn có thể gửi nhu cầu và chọn cách để studio liên hệ lại."
+    "lead": "Bạn có thể gửi nhu cầu và chọn cách để studio liên hệ lại.",
+    "partners": {
+      "eyebrow": "ĐỐI TÁC VẬT LIỆU & XƯỞNG ĐỒNG HÀNH",
+      "subtitle": "Xưởng gỗ, gốm, vải lanh và vật liệu hoàn thiện thường phối hợp trong hồ sơ minh họa.",
+      "rows": [
+        [
+          { "name": "Mộc An", "style": "sans-bold" },
+          { "name": "vôi & cát", "style": "sans-light" },
+          { "name": "Lanh Dệt", "style": "serif-regular" },
+          { "name": "Xưởng Nâu", "style": "sans-medium" },
+          { "name": "GỐM ĐẤT", "style": "accent-caps" }
+        ],
+        [
+          { "name": "SỒI VIỆT", "style": "caps-bold" },
+          { "name": "Đá Mài", "style": "serif-bold" },
+          { "name": "Hòa Ánh", "style": "sans-medium" },
+          { "name": "KÍNH MỜ", "style": "serif-caps" },
+          { "name": "Mây Đan", "style": "sans-bold" }
+        ],
+        [
+          { "name": "SẮT NGUỘI", "style": "caps-heavy" },
+          { "name": "trầm gỗ", "style": "lower-bold" },
+          { "name": "Vải Thô", "style": "sans-medium" },
+          { "name": "ĐÈN GỐM", "style": "caps-wide" }
+        ]
+      ]
+    }
   },
   "packages": [
     {

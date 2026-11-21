@@ -13,7 +13,7 @@ export function renderShell(data, activePage) {
     ? `du-an.html?slug=${encodeURIComponent(featured.slug)}`
     : 'bo-suu-tap.html';
 
-  const introActive = ['bo-suu-tap', 'du-an', 'dich-vu'].includes(activePage) ? 'active' : '';
+  const introActive = ['gioi-thieu', 'bo-suu-tap', 'du-an', 'dich-vu'].includes(activePage) ? 'active' : '';
   const blogActive = ['blog', 'bai-viet'].includes(activePage) ? 'active' : '';
 
   const brandVisual = brand.logoImage
@@ -26,37 +26,43 @@ export function renderShell(data, activePage) {
       <a href="#main-content" class="skip-link">Bỏ qua đến nội dung chính</a>
       <header class="site-header">
         <div class="header-inner">
-          <a href="index.html" class="brand-link">${brandVisual}</a>
-          <nav class="desktop-nav" aria-label="Điều hướng chính">
-            <a href="index.html" class="nav-item ${activePage === 'index' ? 'active' : ''}">Trang chủ</a>
-            <div class="dropdown-wrap">
-              <button type="button" class="nav-dropdown-btn ${introActive}" aria-expanded="false" aria-controls="intro-dropdown-menu" data-action="toggle-dropdown">Giới thiệu ▾</button>
-              <div class="dropdown-menu" id="intro-dropdown-menu" data-dropdown-menu>
-                <a href="bo-suu-tap.html" class="dropdown-link ${activePage === 'bo-suu-tap' ? 'active' : ''}">Bộ sưu tập</a>
-                <a href="${projectDetailHref}" class="dropdown-link ${activePage === 'du-an' ? 'active' : ''}">Chi tiết dự án</a>
-                <a href="dich-vu.html" class="dropdown-link ${activePage === 'dich-vu' ? 'active' : ''}">Dịch vụ và bảng giá</a>
+          <div class="header-pill">
+            <a href="index.html" class="brand-link">${brandVisual}</a>
+            <span class="nav-brand-divider" aria-hidden="true"></span>
+            <nav class="desktop-nav nav-pill-track" aria-label="Điều hướng chính" data-nav-track>
+              <span class="nav-tubelight-pill" aria-hidden="true" data-nav-lamp>
+                <span class="nav-tubelight-lamp"></span>
+              </span>
+              <a href="index.html" class="nav-item ${activePage === 'index' ? 'active' : ''}" data-nav-tab>Trang chủ</a>
+              <div class="dropdown-wrap">
+                <button type="button" class="nav-dropdown-btn ${introActive}" aria-expanded="false" aria-controls="intro-dropdown-menu" data-action="toggle-dropdown" data-nav-tab>Giới thiệu ▾</button>
+                <div class="dropdown-menu" id="intro-dropdown-menu" data-dropdown-menu>
+                  <a href="bo-suu-tap.html" class="dropdown-link ${activePage === 'bo-suu-tap' ? 'active' : ''}">Bộ sưu tập</a>
+                  <a href="${projectDetailHref}" class="dropdown-link ${activePage === 'du-an' ? 'active' : ''}">Chi tiết dự án</a>
+                  <a href="dich-vu.html" class="dropdown-link ${activePage === 'dich-vu' ? 'active' : ''}">Dịch vụ và bảng giá</a>
+                </div>
               </div>
-            </div>
-            <a href="dat-lich.html" class="nav-item ${activePage === 'dat-lich' ? 'active' : ''}">Đặt lịch</a>
-            <a href="blog.html" class="nav-item ${blogActive}">Blog</a>
-            <a href="lien-he.html" class="nav-item ${activePage === 'lien-he' ? 'active' : ''}">Liên hệ</a>
-          </nav>
-          <button type="button" class="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-nav-drawer" data-action="toggle-mobile-menu">Menu</button>
-        </div>
-        <nav class="mobile-drawer" id="mobile-nav-drawer" aria-label="Điều hướng di động" data-mobile-drawer>
-          <a href="index.html" class="mobile-nav-link">Trang chủ</a>
-          <button type="button" class="mobile-sub-toggle" aria-expanded="false" aria-controls="mobile-intro-sub" data-action="toggle-mobile-sub">
-            <span>Giới thiệu ▾</span>
-          </button>
-          <div class="mobile-sub-list" id="mobile-intro-sub">
-            <a href="bo-suu-tap.html" class="mobile-sub-link">Bộ sưu tập</a>
-            <a href="${projectDetailHref}" class="mobile-sub-link">Chi tiết dự án</a>
-            <a href="dich-vu.html" class="mobile-sub-link">Dịch vụ và bảng giá</a>
+              <a href="dat-lich.html" class="nav-item ${activePage === 'dat-lich' ? 'active' : ''}" data-nav-tab>Đặt lịch</a>
+              <a href="blog.html" class="nav-item ${blogActive}" data-nav-tab>Blog</a>
+              <a href="lien-he.html" class="nav-item ${activePage === 'lien-he' ? 'active' : ''}" data-nav-tab>Liên hệ</a>
+            </nav>
+            <button type="button" class="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-nav-drawer" data-action="toggle-mobile-menu">Menu</button>
           </div>
-          <a href="dat-lich.html" class="mobile-nav-link">Đặt lịch</a>
-          <a href="blog.html" class="mobile-nav-link">Blog</a>
-          <a href="lien-he.html" class="mobile-nav-link" style="border-bottom:none;">Liên hệ</a>
-        </nav>
+          <nav class="mobile-drawer" id="mobile-nav-drawer" aria-label="Điều hướng di động" data-mobile-drawer>
+            <a href="index.html" class="mobile-nav-link ${activePage === 'index' ? 'active' : ''}">Trang chủ</a>
+            <button type="button" class="mobile-sub-toggle ${introActive}" aria-expanded="false" aria-controls="mobile-intro-sub" data-action="toggle-mobile-sub">
+              <span>Giới thiệu ▾</span>
+            </button>
+            <div class="mobile-sub-list" id="mobile-intro-sub">
+              <a href="bo-suu-tap.html" class="mobile-sub-link ${activePage === 'bo-suu-tap' ? 'active' : ''}">Bộ sưu tập</a>
+              <a href="${projectDetailHref}" class="mobile-sub-link ${activePage === 'du-an' ? 'active' : ''}">Chi tiết dự án</a>
+              <a href="dich-vu.html" class="mobile-sub-link ${activePage === 'dich-vu' ? 'active' : ''}">Dịch vụ và bảng giá</a>
+            </div>
+            <a href="dat-lich.html" class="mobile-nav-link ${activePage === 'dat-lich' ? 'active' : ''}">Đặt lịch</a>
+            <a href="blog.html" class="mobile-nav-link ${blogActive}">Blog</a>
+            <a href="lien-he.html" class="mobile-nav-link ${activePage === 'lien-he' ? 'active' : ''}" style="border-bottom:none;">Liên hệ</a>
+          </nav>
+        </div>
       </header>
     `;
   }
@@ -166,11 +172,127 @@ export function renderShell(data, activePage) {
 function bindShellEvents() {
   const dropBtn = document.querySelector('[data-action="toggle-dropdown"]');
   const dropMenu = document.querySelector('[data-dropdown-menu]');
+  const navTrack = document.querySelector('[data-nav-track]');
+  const navLamp = document.querySelector('[data-nav-lamp]');
+
+  // Tubelight floating pill gliding indicator (Video 3)
+  let moveLampTo = () => {};
+  let getRestTab = () => null;
+
+  if (navTrack && navLamp) {
+    const tabs = Array.from(navTrack.querySelectorAll('[data-nav-tab]'));
+    const activeTab = tabs.find((t) => t.classList.contains('active')) || tabs[0];
+
+    getRestTab = () => {
+      if (dropMenu && dropMenu.classList.contains('open') && dropBtn) return dropBtn;
+      return activeTab;
+    };
+
+    const measureTab = (el) => {
+      if (!el) return null;
+      const trackRect = navTrack.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      if (!elRect.width) return null;
+      return {
+        left: elRect.left - trackRect.left,
+        width: elRect.width
+      };
+    };
+
+    const applyRect = (rect, instant = false) => {
+      if (!rect) return;
+      if (instant) {
+        navLamp.classList.add('no-transition');
+      }
+      navLamp.style.transform = `translateX(${rect.left}px)`;
+      navLamp.style.width = `${rect.width}px`;
+      navLamp.classList.add('is-ready');
+      if (instant) {
+        navLamp.getBoundingClientRect();
+        navLamp.classList.remove('no-transition');
+      }
+    };
+
+    moveLampTo = (el, instant = false) => {
+      const rect = measureTab(el);
+      if (rect) applyRect(rect, instant);
+    };
+
+    const persistCurrentRect = () => {
+      try {
+        const currentTarget = getRestTab();
+        const rect = measureTab(currentTarget);
+        if (rect) {
+          sessionStorage.setItem('nep_nav_pill_prev', JSON.stringify(rect));
+        }
+      } catch {
+        // Ignore storage restrictions
+      }
+    };
+
+    const initLamp = () => {
+      const targetRect = measureTab(activeTab);
+      if (!targetRect) return;
+      let prevRect = null;
+      try {
+        const raw = sessionStorage.getItem('nep_nav_pill_prev');
+        if (raw) {
+          prevRect = JSON.parse(raw);
+          sessionStorage.removeItem('nep_nav_pill_prev');
+        }
+      } catch {
+        prevRect = null;
+      }
+
+      const prefersReduced = Boolean(
+        window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      );
+
+      if (prevRect && !prefersReduced && typeof prevRect.left === 'number' && typeof prevRect.width === 'number') {
+        applyRect(prevRect, true);
+        requestAnimationFrame(() => requestAnimationFrame(() => applyRect(targetRect, false)));
+      } else {
+        applyRect(targetRect, true);
+      }
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('mouseenter', () => moveLampTo(tab, false));
+      tab.addEventListener('focus', () => moveLampTo(tab, false));
+      tab.addEventListener('click', persistCurrentRect);
+    });
+
+    if (dropMenu) {
+      dropMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', persistCurrentRect);
+      });
+    }
+
+    navTrack.addEventListener('mouseleave', () => {
+      moveLampTo(getRestTab(), false);
+    });
+
+    navTrack.addEventListener('focusout', (e) => {
+      if (!navTrack.contains(e.relatedTarget)) {
+        moveLampTo(getRestTab(), false);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      moveLampTo(getRestTab(), true);
+    }, { passive: true });
+
+    requestAnimationFrame(initLamp);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => moveLampTo(getRestTab(), true));
+    }
+  }
 
   if (dropBtn && dropMenu) {
     const closeDropdown = (returnFocus = false) => {
       dropMenu.classList.remove('open');
       dropBtn.setAttribute('aria-expanded', 'false');
+      moveLampTo(getRestTab(), false);
       if (returnFocus) dropBtn.focus();
     };
 
@@ -178,6 +300,7 @@ function bindShellEvents() {
       e.stopPropagation();
       const isOpen = dropMenu.classList.toggle('open');
       dropBtn.setAttribute('aria-expanded', String(isOpen));
+      moveLampTo(getRestTab(), false);
     });
 
     dropBtn.addEventListener('keydown', (e) => {
